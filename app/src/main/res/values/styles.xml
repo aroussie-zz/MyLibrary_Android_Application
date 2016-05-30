@@ -1,0 +1,34 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+
+    <style name="MyToolbar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- title text color -->
+        <item name="android:textColorPrimary">@color/ToolbarText</item>
+        <!-- subtitle text color -->
+        <item name="android:textColorSecondary">@color/ToolbarText</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
+    </style>
+    <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <!-- Required for Lollipop. -->
+        <item name="android:overlapAnchor">false</item>
+        <item name="android:dropDownVerticalOffset">4.0dip</item>
+    </style>
+
+
+    <!-- Activity with no Title -->
+    <style name="ThemeOverlay.MyNoTitleActivity" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+
+</resources>

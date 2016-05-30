@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
+    tools:context=".ui.LibraryActivity">
+
+    <android.support.v7.widget.Toolbar android:id="@+id/my_toolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#1a237e"
+        android:elevation="4dp"
+        android:theme="@style/MyToolbar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        android:layout_below="@+id/my_toolbar" />
+
+    <TextView
+        android:id="@+id/userMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        android:layout_below="@+id/userName"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/userToken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorText"
+        android:textSize="14sp"
+        android:layout_below="@+id/userMail"
+        android:layout_marginTop="10dp" />
+
+
+
+</RelativeLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingEnd="10dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="155dp"
+        android:id="@+id/cover"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="24dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cover"
+        android:layout_toEndOf="@+id/cover"
+        android:weightSum="2"
+        android:layout_marginStart="15dp"
+        android:layout_above="@+id/ratingBar_rate">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/book_title"
+            android:textColor="@color/colorText"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="3"
+            android:lines="3"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/book_author"
+            android:textColor="@color/colorText"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:lines="2"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar_rate"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:numStars="5"
+        android:stepSize="0.25"
+        android:layout_alignBottom="@+id/cover"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

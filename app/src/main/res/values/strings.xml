@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">MyLibrary</string>
+    <string name="server_client_id"> 1026175740513-91dmfqd74grkq5olk0nl06s7suur4ps9.apps.googleusercontent.com </string>
+    <string name="signed_out">Signed out</string>
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="loading">Loading…</string>
+    <string name="logout">Logout</string>
+
+
+    <!-- SearchView -->
+    <string name="search_hint_book">Search Book</string>
+
+    <!-- SearchBook Activity -->
+    <string name="empty_view_text">No Book Found</string>
+    <string name="search_title">Search</string>
+    <string name="searchBookActivity_toolbar_title">Search books</string>
+
+
+
+    <!--BookDetail Activity -->
+    <string name="label_title">Title:</string>
+    <string name="label_author">Author:</string>
+    <string name="label_rate">Rate:</string>
+    <string name="label_year">Published:</string>
+    <string name="label_categories">Categories:</string>
+    <string name="label_description">Description:</string>
+    <string name="label_isbn">ISBN:</string>
+    <string name="btn_back">back</string>
+    <string name="btn_add">Add to Library</string>
+    <string name="bookDetailActivity_toolbar_title">Book details</string>
+
+
+
+</resources>

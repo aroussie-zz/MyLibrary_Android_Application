@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1026175740513",
+    "project_id": "mylibrary-d0073"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026175740513:android:4b519e842fc470d2",
+        "android_client_info": {
+          "package_name": "com.mylibrary.alexandreroussiere.mylibrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026175740513-0d05utnqhp65tm94cefnsuel29n95sm3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mylibrary.alexandreroussiere.mylibrary",
+            "certificate_hash": "3373C39A286B29E1BD4C207146E919B43A920A19"
+          }
+        },
+        {
+          "client_id": "1026175740513-8s6ld9of2jofg5i0u13f2a8kaajcmjah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAxY-0rFGM_6s-7GZE0PJtPeXkSbNoSFQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
