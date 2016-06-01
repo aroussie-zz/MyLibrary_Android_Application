@@ -2,6 +2,7 @@ package com.mylibrary.alexandreroussiere.mylibrary.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -63,7 +64,7 @@ public class Book implements Parcelable {
     public String getTitle() { return title; }
     public String getAuthor() {
 
-        if (authors == null) {
+        if (authors == null || authors.size() == 0) {
            authors = new ArrayList<String>() {{add("unknown");}};
         }
         return authors.get(0);
@@ -85,31 +86,25 @@ public class Book implements Parcelable {
         return description;
 
     }
-    public String getUrlSmallCover() {
-        if (urlCover == null) {
-            return "";
-        } else {
-            return urlCover.getSmallCover();
-        }
-    }
+
     public String getUrlNormalCover() {
 
         if (urlCover == null) {
-            return "";
-        }else{
-            return urlCover.getNormalCover();
+            urlCover = new Cover("unknown");
         }
+            return urlCover.getNormalCover();
+
     }
     public ArrayList<String> getCategories() {
 
-        if (categories == null){
+        if (categories == null || categories.size()==0){
             categories = new ArrayList<String>() {{ add("unknown"); }};
         }
         return categories;
     }
     public String getISBN() {
 
-        if (isbns == null) {
+        if (isbns == null || isbns.size() == 0) {
             isbns = new ArrayList<ISBN>() {{ add(new ISBN("unknown"));}};
         }
             return isbns.get(0).getIdentifier();

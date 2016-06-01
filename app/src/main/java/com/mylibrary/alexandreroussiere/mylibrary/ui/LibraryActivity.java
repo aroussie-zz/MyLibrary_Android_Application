@@ -4,8 +4,13 @@ package com.mylibrary.alexandreroussiere.mylibrary.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,23 +30,19 @@ public class LibraryActivity extends BaseActivity{
 
     private static final String TAG = "LibraryActivity";
     private GoogleApiClient mGoogleApiClient;
-    private TextView userName;
-    private TextView userMail;
-    private TextView userToken;
     private GoogleSignInAccount userAccount;
     private SqlHelper database;
     private ArrayList<Book> books;
-
+    private RecyclerView recyclerView;
+    private TextView emptyView;
+    private LibraryAdapter adapter;
+    private Book book;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.library_layout);
-
-        userName = (TextView) findViewById(R.id.userName);
-        userMail = (TextView) findViewById(R.id.userMail);
-        userToken = (TextView) findViewById(R.id.userToken);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -55,9 +56,20 @@ public class LibraryActivity extends BaseActivity{
 
         Intent i = getIntent();
         userAccount = (GoogleSignInAccount) i.getParcelableExtra("user");
-
         setUserAccount(userAccount);
-        Log.i(TAG, getUserAccount().getId());
+
+        emptyView = (TextView) findViewById(R.id.empty_view);
+        recyclerView = (RecyclerView) findViewById(R.id.allBooks_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        adapter = new LibraryAdapter();
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new LibraryAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                book = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(),book.getISBN(),Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
@@ -69,11 +81,19 @@ public class LibraryActivity extends BaseActivity{
         super.onStart();
         database = new SqlHelper(this);
         books = database.getAllBooks(userAccount.getId());
-        if(books.size() != 0){
-            Log.i(TAG,"Heeeeeeeeeeeeeeere");
-            userName.setText("title: " + books.get(0).getTitle());
-        }
+        updateUI(books);
+    }
 
+    public void updateUI(ArrayList<Book> data){
+        adapter.setData(data);
+        if (adapter.getItemCount() != 0) {
+            emptyView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }else {
+            emptyView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

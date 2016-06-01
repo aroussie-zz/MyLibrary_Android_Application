@@ -108,7 +108,12 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         super.onStart();
         String categories = "";
         int i = 0;
-        Picasso.with(BookDetailActivity.this).load(book.getUrlNormalCover()).into(bookCover);
+        Log.i("BookDetail",book.getUrlNormalCover());
+        if (book.getUrlNormalCover().equals("unknown")) {
+            Picasso.with(getApplicationContext()).load(R.mipmap.book_not_found).into(bookCover);
+        }else {
+            Picasso.with(getApplicationContext()).load(book.getUrlNormalCover()).into(bookCover);
+        }
         bookTitle.setText(book.getTitle());
         bookAuthor.setText(book.getAuthor());
         bookRate.setRating(book.getRate());

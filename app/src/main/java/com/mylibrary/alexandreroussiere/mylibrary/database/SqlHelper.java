@@ -68,7 +68,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String CREATE_BOOK_TABLE = "CREATE TABLE book ( " +
-                "isbn INTEGER PRIMARY KEY, " +
+                "isbn TEXT PRIMARY KEY, " +
                 "title TEXT, "+
                 "author TEXT, "+
                 "official_rate TEXT, "+
@@ -83,7 +83,7 @@ public class SqlHelper extends SQLiteOpenHelper {
 
         String CREATE_LIBRARY_TABLE = "CREATE TABLE library ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "isbn_book INTEGER, "+
+                "isbn_book TEXT, "+
                 "id_user TEXT, "+
                 "FOREIGN KEY(isbn_book) REFERENCES book(isbn), " +
                 "FOREIGN KEY(id_user) REFERENCES user(token)) ";
@@ -212,14 +212,16 @@ public class SqlHelper extends SQLiteOpenHelper {
                 book.setRate(Float.parseFloat(cursor.getString(3)));
                 book.setPersonalRate(Float.parseFloat(cursor.getString(4)));
                 book.setYear(cursor.getString(5));
+                book.setUrlCover(cursor.getString(6));
+                book.setDescription(cursor.getString(7));
+                book.setComment(cursor.getString(8));
+
                 try {
-                    book.setDate_added(getDateFormat.format(dateAddedFormat.parse(cursor.getString(6))));
+                    book.setDate_added(getDateFormat.format(dateAddedFormat.parse(cursor.getString(9))));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                book.setComment(cursor.getString(7));
-                book.setDescription(cursor.getString(8));
-                book.setUrlCover(cursor.getString(9));
+
                 book.setIsRead(Integer.parseInt(cursor.getString(10)) != 0);
                 book.setIsFavorite(Integer.parseInt(cursor.getString(11)) != 0);
 

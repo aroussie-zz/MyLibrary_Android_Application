@@ -39,7 +39,7 @@ public class SearchBookAdapter extends RecyclerView.Adapter<SearchBookAdapter.Bo
         holder.bookTitle.setText("Title: " + book.getTitle());
         holder.bookAuthor.setText("Author: " + book.getAuthor());
         holder.ratingBar.setRating(book.getRate());
-        if (book.getUrlNormalCover() == "") {
+        if (book.getUrlNormalCover().equals("unknown")) {
             Picasso.with(mContext).load(R.mipmap.book_not_found).into(holder.bookCover);
         }else {
             Picasso.with(mContext).load(book.getUrlNormalCover()).into(holder.bookCover);

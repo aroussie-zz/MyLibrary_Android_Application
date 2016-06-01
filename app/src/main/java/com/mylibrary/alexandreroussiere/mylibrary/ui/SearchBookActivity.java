@@ -62,6 +62,8 @@ public class SearchBookActivity extends BaseActivity implements OnDataFetchedLis
                 seeBookDetail.putExtra("book",book);
                 startActivity(seeBookDetail);
 
+               // Toast.makeText(getApplicationContext(),book.getUrlNormalCover(),Toast.LENGTH_LONG).show();
+
             }
         });
 
