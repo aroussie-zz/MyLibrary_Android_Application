@@ -12,6 +12,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.mylibrary.alexandreroussiere.mylibrary.R;
+import com.mylibrary.alexandreroussiere.mylibrary.database.SqlHelper;
+import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
+
+import java.util.ArrayList;
 
 
 /**
@@ -25,6 +29,9 @@ public class LibraryActivity extends BaseActivity{
     private TextView userMail;
     private TextView userToken;
     private GoogleSignInAccount userAccount;
+    private SqlHelper database;
+    private ArrayList<Book> books;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -49,6 +56,9 @@ public class LibraryActivity extends BaseActivity{
         Intent i = getIntent();
         userAccount = (GoogleSignInAccount) i.getParcelableExtra("user");
 
+        setUserAccount(userAccount);
+        Log.i(TAG, getUserAccount().getId());
+
     }
 
     @Override
@@ -57,10 +67,13 @@ public class LibraryActivity extends BaseActivity{
             mGoogleApiClient.connect();
         }
         super.onStart();
-        userName.setText("Welcome " + userAccount.getDisplayName());
-        userMail.setText("Mail " + userAccount.getEmail());
-        userToken.setText("Token " + userAccount.getId());
-        
+        database = new SqlHelper(this);
+        books = database.getAllBooks(userAccount.getId());
+        if(books.size() != 0){
+            Log.i(TAG,"Heeeeeeeeeeeeeeere");
+            userName.setText("title: " + books.get(0).getTitle());
+        }
+
     }
 
     @Override

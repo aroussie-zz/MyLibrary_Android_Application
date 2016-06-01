@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,6 +38,12 @@ public class Book implements Parcelable {
     @SerializedName("categories")
     private ArrayList<String> categories;
 
+    private float personalRate;
+    private String date_added;
+    private String comment;
+    private boolean is_read;
+    private boolean is_favorite;
+
     public Book(String t, ArrayList<String>auth, String yearEdition, float average,
                 String desc,Cover url, ArrayList<String> cat){
         title = t;
@@ -46,6 +53,11 @@ public class Book implements Parcelable {
         description = desc;
         urlCover = url;
         categories = cat;
+    }
+
+    public Book() {
+        isbns = new ArrayList<>();
+        authors = new ArrayList<>();
     }
 
     public String getTitle() { return title; }
@@ -103,7 +115,25 @@ public class Book implements Parcelable {
             return isbns.get(0).getIdentifier();
     }
 
+    public float getPersonalRate() { return personalRate; }
+    public String getDate_added() { return date_added; }
+    public String getComment() { return comment; }
+    public boolean getIsRead() {return is_read; }
+    public boolean getIsFavorite() {return is_favorite; }
+
     public void setTitle(String str){ title = str; }
+    public void setIsbns(String str){ isbns.add(new ISBN(str)); }
+    public void setAuthors(String str){ authors.add(str); }
+    public void setYear(String str){ year=str; }
+    public void setRate(float nb){ rate = nb; }
+    public void setPersonalRate(float nb){ personalRate = nb; }
+    public void setDescription(String desc){ description = desc; }
+    public void setUrlCover(String url){ urlCover = new Cover(url); }
+    public void setCategories(String str){ categories.add(str); }
+    public void setDate_added(String date){ date_added = date; }
+    public void setComment(String com){ comment = com; }
+    public void setIsRead(boolean bool){ is_read = bool; }
+    public void setIsFavorite(boolean bool){ is_favorite = bool; }
 
     @Override
     public int describeContents() { return 0; }

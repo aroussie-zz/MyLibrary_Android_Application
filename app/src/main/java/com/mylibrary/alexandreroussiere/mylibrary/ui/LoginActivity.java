@@ -88,6 +88,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     @Override
+    public void onDestroy(){
+        if(mProgressDialog != null){
+            mProgressDialog.dismiss();
+        }
+        super.onDestroy();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -137,6 +145,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void showProgressDialog() {
+
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage(getString(R.string.loading));
@@ -156,7 +165,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button:
-                Log.d(TAG,"sign in button clicked");
                 signIn();
                 break;
 

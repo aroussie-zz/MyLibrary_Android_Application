@@ -53,7 +53,6 @@ public class SearchBookActivity extends BaseActivity implements OnDataFetchedLis
         recyclerView = (RecyclerView) findViewById(R.id.booksFound_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);
-        Log.i(TAG, "Heeeeeeeeeeere");
         adapter.setOnItemClickListener(new SearchBookAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {

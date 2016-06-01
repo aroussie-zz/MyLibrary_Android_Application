@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,7 +37,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
     private SearchView searchView;
-
+    protected static GoogleSignInAccount userAccount = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -58,6 +59,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
 
     }
+
 
     @Override
     public void setContentView(int layoutResId){
@@ -163,10 +165,18 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
                     public void onResult(Status status) {
                         Intent goLoginPage = new Intent(getApplicationContext(),LoginActivity.class);
                         startActivity(goLoginPage);
+                        finish();
                     }
                 });
     }
     // [END signOut]
+
+
+    protected void setUserAccount(GoogleSignInAccount account) {
+        Log.i(TAG, "setUserAccount");
+        userAccount = account;
+    }
+    protected GoogleSignInAccount getUserAccount() { return userAccount; }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -176,11 +186,13 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Successfully connected");
+
     }
 
     @Override
     public void onConnectionSuspended(int i) {
         Log.i(TAG,"Connection Suspended: " + String.format("code %d", i));
+        mGoogleApiClient.connect();
     }
 
 }

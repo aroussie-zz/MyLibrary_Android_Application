@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mylibrary.alexandreroussiere.mylibrary.R;
+import com.mylibrary.alexandreroussiere.mylibrary.database.SqlHelper;
 import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +45,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
     private LinearLayout btnLayout;
 
     private Book book;
+    private SqlHelper database;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -97,6 +99,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         });
 
         getSupportActionBar().setTitle(R.string.bookDetailActivity_toolbar_title);
+        database = new SqlHelper(this);
 
     }
 
@@ -142,7 +145,8 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.btn_add:
-                Toast.makeText(BookDetailActivity.this,"Btn add clicked",Toast.LENGTH_LONG).show();
+                database.addBook(book,getUserAccount().getId());
+                Toast.makeText(getApplicationContext(),"Book added to the library",Toast.LENGTH_LONG).show();
                 break;
         }
     }
