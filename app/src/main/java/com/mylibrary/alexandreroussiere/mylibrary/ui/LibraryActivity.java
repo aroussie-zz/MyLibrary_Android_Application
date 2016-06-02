@@ -72,6 +72,13 @@ public class LibraryActivity extends BaseActivity{
                 startActivity(seeBookDetail);
             }
         });
+        adapter.setOnItemLongClickListener(new LibraryAdapter.onItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View v, int position) {
+                book = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(),"Long click",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

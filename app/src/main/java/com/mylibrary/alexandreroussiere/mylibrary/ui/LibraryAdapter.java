@@ -24,6 +24,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
     private ArrayList<Book> data;
     private Context mContext;
     private onItemClickListener itemClickListener;
+    private onItemLongClickListener itemLongClickListener;
 
 
     @Override
@@ -55,7 +56,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
 
     public Book getItem(int position){ return data.get(position); }
 
-    public class LibraryRowHolder extends RecyclerView.ViewHolder implements AdapterView.OnClickListener {
+    public class LibraryRowHolder extends RecyclerView.ViewHolder implements AdapterView.OnClickListener,
+            AdapterView.OnLongClickListener{
 
         private ImageView cover;
         private TextView title;
@@ -69,6 +71,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
             author = (TextView) itemView.findViewById(R.id.book_author);
             date_added = (TextView) itemView.findViewById(R.id.book_date_added);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
 
@@ -78,12 +81,28 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
                 itemClickListener.onItemClick(v, getAdapterPosition());
             }
         }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if(itemLongClickListener != null){
+                itemLongClickListener.onItemLongClick(v, getAdapterPosition());
+            }
+            return true;
+        }
     }
 
     public void setData(ArrayList<Book> booksData){ data = booksData; }
 
     public interface onItemClickListener{
         void onItemClick(View v, int position);
+    }
+
+    public interface onItemLongClickListener{
+        void onItemLongClick(View v, int position);
+    }
+
+    public void setOnItemLongClickListener(final onItemLongClickListener mItemLongClickListener){
+        this.itemLongClickListener = mItemLongClickListener;
     }
 
     public void setOnItemClickListener(final onItemClickListener mItemClickListener){
