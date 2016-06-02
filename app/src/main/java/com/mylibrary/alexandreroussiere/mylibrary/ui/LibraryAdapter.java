@@ -39,7 +39,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
         Book book = data.get(position);
         holder.title.setText("Title: " + book.getTitle());
         holder.author.setText("Author: " + book.getAuthor());
-        holder.date_added.setText(book.getDate_added());
+        holder.date_added.setText("Added on " + book.getDate_added());
         if (book.getUrlNormalCover().equals("unknown")) {
             Picasso.with(mContext).load(R.mipmap.book_not_found).into(holder.cover);
         }else {

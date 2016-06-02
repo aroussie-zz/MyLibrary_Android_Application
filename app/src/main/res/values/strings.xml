@@ -29,6 +29,9 @@
     <string name="btn_add">Add to Library</string>
     <string name="bookDetailActivity_toolbar_title">Book details</string>
 
+    <!--LibraryDetail Activity -->
+    <string name="label_officialRate">Official Rate:</string>
+    <string name="label_personalRate">My Rate:</string>
 
 
 </resources>

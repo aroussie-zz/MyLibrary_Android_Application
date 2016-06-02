@@ -23,7 +23,14 @@
         </activity>
 
         <activity android:name=".ui.BookDetailActivity"
-            android:theme="@style/ThemeOverlay.MyNoTitleActivity">
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"
+            android:parentActivityName=".ui.LibraryActivity">
+
+        </activity>
+
+        <activity android:name=".ui.LibraryDetailActivity"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"
+            android:parentActivityName=".ui.LibraryActivity">
 
         </activity>
 
@@ -35,7 +42,8 @@
 
         </activity>
         <activity android:name=".ui.SearchBookActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.LibraryActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

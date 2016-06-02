@@ -160,7 +160,7 @@ public class SqlHelper extends SQLiteOpenHelper {
         values.put(KEY_ISBN_BOOK, book.getISBN());
         values.put(KEY_TITLE, book.getTitle());
         values.put(KEY_AUTHOR, book.getAuthor());
-        values.put(KEY_OFFICIAL_RATE, String.valueOf(book.getRate()));
+        values.put(KEY_OFFICIAL_RATE, String.valueOf(book.getOfficialRate()));
         values.put(KEY_PERSO_RATE, 0);
         values.put(KEY_YEAR, book.getYear());
         values.put(KEY_DATE_ADDED, dateFormat.format(date_added));

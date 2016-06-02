@@ -28,7 +28,7 @@ public class Book implements Parcelable {
     private String year;
 
     @SerializedName("averageRating")
-    private float rate;
+    private float officialRate;
 
     @SerializedName("description")
     private String description;
@@ -50,7 +50,7 @@ public class Book implements Parcelable {
         title = t;
         authors = auth;
         year = yearEdition;
-        rate = average;
+        officialRate = average;
         description = desc;
         urlCover = url;
         categories = cat;
@@ -77,7 +77,7 @@ public class Book implements Parcelable {
         }
         return year;
     }
-    public float getRate() { return rate; }
+    public float getOfficialRate() { return officialRate; }
 
     public String getDescription() {
         if (description == null){
@@ -120,7 +120,7 @@ public class Book implements Parcelable {
     public void setIsbns(String str){ isbns.add(new ISBN(str)); }
     public void setAuthors(String str){ authors.add(str); }
     public void setYear(String str){ year=str; }
-    public void setRate(float nb){ rate = nb; }
+    public void setRate(float nb){ officialRate = nb; }
     public void setPersonalRate(float nb){ personalRate = nb; }
     public void setDescription(String desc){ description = desc; }
     public void setUrlCover(String url){ urlCover = new Cover(url); }
@@ -140,10 +140,15 @@ public class Book implements Parcelable {
         dest.writeString(title);
         dest.writeStringList(authors);
         dest.writeString(getYear());
-        dest.writeFloat(rate);
+        dest.writeFloat(officialRate);
+        dest.writeFloat(personalRate);
         dest.writeString(getDescription());
         dest.writeString(getUrlNormalCover());
         dest.writeStringList(getCategories());
+        dest.writeString(getComment());
+        dest.writeByte((byte) (is_read ? 1 : 0));
+        dest.writeByte((byte) (is_favorite ? 1 : 0));
+
     }
 
     public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
@@ -162,10 +167,15 @@ public class Book implements Parcelable {
         title = pc.readString();
         authors = pc.createStringArrayList();
         year = pc.readString();
-        rate = pc.readFloat();
+        officialRate = pc.readFloat();
+        personalRate = pc.readFloat();
         description = pc.readString();
         urlCover = new Cover(pc.readString());
         categories = pc.createStringArrayList();
+        comment = pc.readString();
+        is_read = pc.readByte() != 0;
+        is_favorite = pc.readByte() != 0;
+
 
 
     }

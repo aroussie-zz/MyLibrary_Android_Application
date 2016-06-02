@@ -67,7 +67,9 @@ public class LibraryActivity extends BaseActivity{
             @Override
             public void onItemClick(View v, int position) {
                 book = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(),book.getISBN(),Toast.LENGTH_LONG).show();
+                Intent seeBookDetail = new Intent(LibraryActivity.this,LibraryDetailActivity.class);
+                seeBookDetail.putExtra("book",book);
+                startActivity(seeBookDetail);
             }
         });
 
