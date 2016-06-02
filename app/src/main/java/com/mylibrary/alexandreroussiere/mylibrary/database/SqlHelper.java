@@ -44,7 +44,7 @@ public class SqlHelper extends SQLiteOpenHelper {
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_COMMENT= "comment";
     private static final String KEY_DATE_ADDED = "date_added";
-    private static final String KEY_IS_SEEN = "is_seen";
+    private static final String KEY_IS_READ = "is_read";
     private static final String KEY_IS_FAVORITE = "is_favorite";
 
     // Library Table Columns names
@@ -77,14 +77,14 @@ public class SqlHelper extends SQLiteOpenHelper {
                 "cover_url TEXT, "+
                 "description TEXT, "+
                 "comment TEXT, "+
-                "date_added TEXT, "+
-                "is_seen INTEGER, "+
-                "is_favorite INTEGER)";
+                "date_added TEXT)";
 
         String CREATE_LIBRARY_TABLE = "CREATE TABLE library ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "isbn_book TEXT, "+
                 "id_user TEXT, "+
+                "is_read INTEGER, "+
+                "is_favorite INTEGER, "+
                 "FOREIGN KEY(isbn_book) REFERENCES book(isbn), " +
                 "FOREIGN KEY(id_user) REFERENCES user(token)) ";
 
@@ -167,13 +167,14 @@ public class SqlHelper extends SQLiteOpenHelper {
         values.put(KEY_COMMENT,"");
         values.put(KEY_DESCRIPTION,book.getDescription());
         values.put(KEY_COVER_URL,book.getUrlNormalCover());
-        values.put(KEY_IS_SEEN,0);
-        values.put(KEY_IS_FAVORITE, 0);
+
 
         //Values for movie_library table
         ContentValues values_library = new ContentValues();
         values_library.put(KEY_BOOK_ISBN,book.getISBN());
         values_library.put(KEY_ID_USER,userID);
+        values_library.put(KEY_IS_READ,0);
+        values_library.put(KEY_IS_FAVORITE, 0);
 
         // insert
         db.insert(TABLE_BOOK, // table
@@ -196,8 +197,8 @@ public class SqlHelper extends SQLiteOpenHelper {
         SimpleDateFormat getDateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
         String query = "SELECT book.isbn,book.title,book.author,book.official_rate,book.personal_rate," +
-                "book.year,book.cover_url,book.description,book.comment,book.date_added,book.is_seen," +
-                "book.is_favorite FROM book,library WHERE library.id_user=? AND library.isbn_book=" +
+                "book.year,book.cover_url,book.description,book.comment,book.date_added,library.is_read," +
+                "library.is_favorite FROM book,library WHERE library.id_user=? AND library.isbn_book=" +
                 "book.isbn ORDER BY book.date_added DESC";
 
         Cursor cursor = db.rawQuery(query, new String[] {userID} );
@@ -230,6 +231,26 @@ public class SqlHelper extends SQLiteOpenHelper {
         }
 
         return books;
+
+    }
+
+    public void updateIsReadColumn(Book book,String userID){
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "UPDATE library SET is_read=" + (book.getIsRead() ? 1 : 0) + " WHERE isbn_book=?"
+                + " AND id_user=?";
+        db.execSQL(query,new String[]{ book.getISBN(), userID});
+        Log.d("UpdateReadColumn: ", "column updated with: " + (book.getIsRead() ? 1 : 0) );
+
+    }
+
+    public void updateIsFavoriteColumn(Book book,String userID){
+
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "UPDATE library SET is_favorite=" + (book.getIsFavorite() ? 1 : 0) + " WHERE isbn_book=?"
+                + " AND id_user=?";
+        db.execSQL(query,new String[]{ book.getISBN(), userID});
+        Log.d("UpdateFavoriteColumn: ", "column updated with: " + (book.getIsFavorite() ? 1 : 0) );
 
     }
 

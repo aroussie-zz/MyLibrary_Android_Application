@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mylibrary.alexandreroussiere.mylibrary.R;
+import com.mylibrary.alexandreroussiere.mylibrary.database.SqlHelper;
 import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
 import com.squareup.picasso.Picasso;
 
@@ -43,6 +42,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
     private CheckBox checkbox_favorite;
 
     private Book book;
+    private SqlHelper database;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -101,6 +101,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
             }
         });
 
+        setCheckBoxes();
         checkBox_read.setOnCheckedChangeListener(this);
         checkbox_favorite.setOnCheckedChangeListener(this);
 
@@ -110,6 +111,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
     public void onStart(){
 
         super.onStart();
+        database = new SqlHelper(getApplicationContext());
         String categories = "";
         int i = 0;
         if (book.getUrlNormalCover().equals("unknown")) {
@@ -150,6 +152,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
         }
 
 
+
     }
 
     @Override
@@ -179,20 +182,41 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
         switch(buttonView.getId()){
             case R.id.checkbox_read:
                 if (isChecked){
+                    book.setIsRead(true);
+                    database.updateIsReadColumn(book,getUserAccount().getId());
                     Toast.makeText(getApplicationContext(),"The book is read", Toast.LENGTH_SHORT).show();
                     break;
                 }else{
-                    Toast.makeText(getApplicationContext(),"The book is not read", Toast.LENGTH_SHORT).show();
+                    book.setIsRead(false);
+                    database.updateIsReadColumn(book,getUserAccount().getId());
+                    Toast.makeText(getApplicationContext(),"The book is not read yet", Toast.LENGTH_SHORT).show();
                     break;
                 }
             case R.id.checkbox_favorite:
                 if(isChecked){
-                    Toast.makeText(getApplicationContext(),"The book is favorite", Toast.LENGTH_SHORT).show();
+                    book.setIsFavorite(true);
+                    database.updateIsFavoriteColumn(book,getUserAccount().getId());
+                    Toast.makeText(getApplicationContext(),"Book added to your favorite", Toast.LENGTH_SHORT).show();
                     break;
                 }else{
-                    Toast.makeText(getApplicationContext(),"The book is not favorite", Toast.LENGTH_SHORT).show();
+                    book.setIsFavorite(false);
+                    database.updateIsFavoriteColumn(book,getUserAccount().getId());
+                    Toast.makeText(getApplicationContext(),"book removed from your favorite", Toast.LENGTH_SHORT).show();
                     break;
                 }
+        }
+    }
+
+    public void setCheckBoxes(){
+        if (book.getIsRead()){
+            checkBox_read.setChecked(true);
+        }else{
+            checkBox_read.setChecked(false);
+        }
+        if (book.getIsFavorite()){
+            checkbox_favorite.setChecked(true);
+        }else{
+            checkbox_favorite.setChecked(false);
         }
     }
 }
