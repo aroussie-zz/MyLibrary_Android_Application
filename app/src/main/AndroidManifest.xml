@@ -34,6 +34,12 @@
 
         </activity>
 
+        <activity android:name=".ui.UpdateBook"
+            android:theme="@style/ThemeOverlay.MyNoTitleActivity"
+            android:parentActivityName=".ui.LibraryActivity">
+
+        </activity>
+
         <activity android:name=".ui.BaseActivity"
             android:parentActivityName=".ui.LibraryActivity">
 

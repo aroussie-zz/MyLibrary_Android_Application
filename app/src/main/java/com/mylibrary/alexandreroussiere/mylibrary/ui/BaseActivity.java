@@ -173,7 +173,7 @@ public class BaseActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
     protected void setUserAccount(GoogleSignInAccount account) {
-        Log.i(TAG, "setUserAccount");
+        Log.i(TAG, "setUserAccount : " + account.getId());
         userAccount = account;
     }
     protected GoogleSignInAccount getUserAccount() { return userAccount; }

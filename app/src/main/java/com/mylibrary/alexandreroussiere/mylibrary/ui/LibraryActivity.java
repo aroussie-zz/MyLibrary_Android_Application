@@ -1,9 +1,11 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,6 +39,9 @@ public class LibraryActivity extends BaseActivity{
     private TextView emptyView;
     private LibraryAdapter adapter;
     private Book book;
+    private AlertDialog.Builder dialogBuilder;
+
+    final CharSequence[] items = {"Update","Delete"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -56,7 +61,27 @@ public class LibraryActivity extends BaseActivity{
 
         Intent i = getIntent();
         userAccount = (GoogleSignInAccount) i.getParcelableExtra("user");
-        setUserAccount(userAccount);
+        if(userAccount != null){
+            setUserAccount(userAccount);
+        }
+
+        dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case 0:
+                        Intent updateBook = new Intent(LibraryActivity.this,UpdateBook.class);
+                        updateBook.putExtra("book",book);
+                        startActivity(updateBook);
+                        break;
+                    case 1:
+                        database.deleteBook(book,getUserAccount().getId());
+                        updateUI();
+                        break;
+                }
+            }
+        });
 
         emptyView = (TextView) findViewById(R.id.empty_view);
         recyclerView = (RecyclerView) findViewById(R.id.allBooks_list);
@@ -67,16 +92,18 @@ public class LibraryActivity extends BaseActivity{
             @Override
             public void onItemClick(View v, int position) {
                 book = adapter.getItem(position);
+
                 Intent seeBookDetail = new Intent(LibraryActivity.this,LibraryDetailActivity.class);
                 seeBookDetail.putExtra("book",book);
                 startActivity(seeBookDetail);
+
             }
         });
         adapter.setOnItemLongClickListener(new LibraryAdapter.onItemLongClickListener() {
             @Override
             public void onItemLongClick(View v, int position) {
                 book = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(),"Long click",Toast.LENGTH_SHORT).show();
+                dialogBuilder.create().show();
             }
         });
 
@@ -89,12 +116,12 @@ public class LibraryActivity extends BaseActivity{
         }
         super.onStart();
         database = new SqlHelper(this);
-        books = database.getAllBooks(userAccount.getId());
-        updateUI(books);
+        updateUI();
     }
 
-    public void updateUI(ArrayList<Book> data){
-        adapter.setData(data);
+    public void updateUI(){
+        books = database.getAllBooks(getUserAccount().getId());
+        adapter.setData(books);
         if (adapter.getItemCount() != 0) {
             emptyView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -118,6 +145,7 @@ public class LibraryActivity extends BaseActivity{
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         }
+
         super.onResume();
     }
 

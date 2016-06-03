@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -40,6 +41,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
     private ScrollView scrollView;
     private CheckBox checkBox_read;
     private CheckBox checkbox_favorite;
+    private LinearLayout linearLayoutComment;
 
     private Book book;
     private SqlHelper database;
@@ -66,6 +68,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
         scrollView = (ScrollView) findViewById(R.id.scrollView);
         checkbox_favorite = (CheckBox) findViewById(R.id.checkbox_favorite);
         checkBox_read = (CheckBox) findViewById(R.id.checkbox_read);
+        linearLayoutComment = (LinearLayout) findViewById(R.id.linearLayoutComment);
 
         bookDescription.setMovementMethod(new ScrollingMovementMethod());
         bookComment.setMovementMethod(new ScrollingMovementMethod());
@@ -112,8 +115,6 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
 
         super.onStart();
         database = new SqlHelper(getApplicationContext());
-        String categories = "";
-        int i = 0;
         if (book.getUrlNormalCover().equals("unknown")) {
             Picasso.with(getApplicationContext()).load(R.mipmap.book_not_found).into(bookCover);
         }else {
@@ -125,21 +126,16 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
         bookPersonalRate.setRating(book.getPersonalRate());
         bookYear.setText(formatPublishedDate(book.getYear()));
         bookISBN.setText(book.getISBN());
-        for (i = 0 ; i < book.getCategories().size() -1  ; i++) {
-            categories += book.getCategories().get(i) + " / ";
-        }
-        bookCategories.setText(categories + book.getCategories().get(i));
+        bookCategories.setText(book.getCategories().get(0));
 
         if (book.getDescription().length() == 0){
             bookDescription.setVisibility(View.GONE);
-            if(book.getComment().length() != 0){
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bookComment.getLayoutParams();
-                params.addRule(RelativeLayout.BELOW,R.id.book_isbn);
-            }
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) linearLayoutComment.getLayoutParams();
+            params.addRule(RelativeLayout.BELOW,R.id.book_isbn);
 
         }else {
             bookDescription.setVisibility(View.VISIBLE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bookComment.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) linearLayoutComment.getLayoutParams();
             params.addRule(RelativeLayout.BELOW, R.id.book_description);
             bookDescription.setText(book.getDescription());
         }
@@ -150,8 +146,6 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
             bookComment.setVisibility(View.VISIBLE);
             bookComment.setText(book.getComment());
         }
-
-
 
     }
 

@@ -59,6 +59,7 @@ public class Book implements Parcelable {
     public Book() {
         isbns = new ArrayList<>();
         authors = new ArrayList<>();
+        categories = new ArrayList<>();
     }
 
     public String getTitle() { return title; }

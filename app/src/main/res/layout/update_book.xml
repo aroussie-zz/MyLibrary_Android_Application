@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+>
 
 
     <android.support.v7.widget.Toolbar android:id="@+id/my_toolbar"
@@ -29,7 +30,10 @@
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="20dp">
+            android:paddingBottom="20dp"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:id="@+id/parent">
 
 
             <ImageView
@@ -46,8 +50,7 @@
                 android:id="@+id/book_title"
                 android:layout_alignTop="@+id/label_book_title"
                 android:layout_toEndOf="@+id/label_book_title"
-                android:layout_marginLeft="20dp"
-                android:textIsSelectable="true" />
+                android:layout_marginLeft="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,8 +81,7 @@
                 android:id="@+id/book_author"
                 android:layout_alignTop="@+id/label_book_author"
                 android:layout_toEndOf="@+id/label_book_author"
-                android:layout_marginLeft="20dp"
-                android:textIsSelectable="true" />
+                android:layout_marginLeft="20dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -126,16 +128,24 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/label_personalRate"
                     android:id="@+id/label_book_personalRate"
+                    android:labelFor="@+id/personalRate"
                     android:textStyle="bold" />
 
-                <RatingBar
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/book_personalRate"
-                    style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
-                    android:numStars="5"
-                    android:stepSize="0.25"
-                    android:layout_marginLeft="20dp" />
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/personalRate"
+                    android:inputType="numberDecimal"
+                    android:layout_marginLeft="10dp"
+                    android:imeOptions="actionDone"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="/10"
+                    android:id="@+id/textView" />
 
             </LinearLayout>
 
@@ -204,82 +214,30 @@
                 android:layout_toEndOf="@+id/label_book_isbn"
                 android:layout_marginLeft="20dp"
                 android:layout_alignParentLeft="false"
-                android:layout_alignTop="@+id/label_book_isbn"
-                android:textIsSelectable="true" />
+                android:layout_alignTop="@+id/label_book_isbn"/>
 
-            <TextView
+            <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:padding="@dimen/padding_description"
-                android:id="@+id/book_description"
+                android:id="@+id/book_comment"
                 android:layout_below="@+id/book_isbn"
                 android:layout_alignStart="@+id/label_book_isbn"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:textStyle="bold"
-                android:lines="4"
-                android:maxLines="4"
+                android:gravity="top"
                 android:scrollbars="vertical"
-                android:clickable="true"
-                android:textIsSelectable="true" />
+                android:hint="@string/commentHint"
+                android:inputType="textMultiLine|textAutoComplete|textCapSentences"/>
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+            <Button
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/book_description"
-                android:layout_alignStart="@+id/label_book_year"
+                android:id="@+id/btn_update"
+                android:layout_below="@+id/book_comment"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:gravity="center_vertical"
-                android:id="@+id/linearLayoutComment">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/label_comment"
-                    android:id="@+id/label_book_comment"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:padding="@dimen/padding_description"
-                    android:id="@+id/book_comment"
-                    android:maxLines="4"
-                    android:scrollbars="vertical"
-                    android:clickable="true"
-                    android:textIsSelectable="true" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignTop="@+id/book_cover"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/book_cover"
-                android:id="@+id/linearLayoutCheckboxes"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_below="@+id/book_cover"
-                android:layout_alignBottom="@+id/book_cover">
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkbox_read"
-                    android:layout_marginBottom="35dp"
-                    android:button="@drawable/checkbox_is_read_selector"/>
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkbox_favorite"
-                    android:button="@drawable/checkbox_is_favorite_selector"/>
-            </LinearLayout>
+                android:layout_centerHorizontal="true"
+                android:text="@string/update"/>
 
 
         </RelativeLayout>

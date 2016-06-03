@@ -24,6 +24,7 @@
     <string name="label_year">Published:</string>
     <string name="label_categories">Categories:</string>
     <string name="label_description">Description:</string>
+    <string name="label_comment">Comments:</string>
     <string name="label_isbn">ISBN:</string>
     <string name="btn_back">back</string>
     <string name="btn_add">Add to Library</string>
@@ -32,6 +33,10 @@
     <!--LibraryDetail Activity -->
     <string name="label_officialRate">Official Rate:</string>
     <string name="label_personalRate">My Rate:</string>
+
+    <!--UpdateBook Activity -->
+    <string name="update">Update</string>
+    <string name="commentHint">Comments</string>
 
 
 </resources>

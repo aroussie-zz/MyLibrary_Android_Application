@@ -62,8 +62,6 @@ public class SearchBookActivity extends BaseActivity implements OnDataFetchedLis
                 seeBookDetail.putExtra("book",book);
                 startActivity(seeBookDetail);
 
-               // Toast.makeText(getApplicationContext(),book.getUrlNormalCover(),Toast.LENGTH_LONG).show();
-
             }
         });
 
@@ -105,7 +103,6 @@ public class SearchBookActivity extends BaseActivity implements OnDataFetchedLis
     }
 
 
-
     @Override
     public void updateUI(ArrayList<Book> books) {
 
@@ -125,13 +122,8 @@ public class SearchBookActivity extends BaseActivity implements OnDataFetchedLis
     @Override
     public void displayErrorMessage(String errorMessage) {
         Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
+
     }
 
-    public void hideSoftKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
 }
