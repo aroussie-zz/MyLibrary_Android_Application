@@ -24,7 +24,7 @@
     <string name="label_year">Published:</string>
     <string name="label_categories">Categories:</string>
     <string name="label_description">Description:</string>
-    <string name="label_comment">Comments:</string>
+    <string name="label_comment">My comments: %s</string>
     <string name="label_isbn">ISBN:</string>
     <string name="btn_back">back</string>
     <string name="btn_add">Add to Library</string>

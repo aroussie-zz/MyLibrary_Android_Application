@@ -35,13 +35,13 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
     private TextView bookCategories;
     private TextView bookDescription;
     private TextView bookComment;
+    private TextView bookCommentLabel;
     private RatingBar bookPersonalRate;
     private RatingBar bookOfficialRate;
     private ImageView bookCover;
     private ScrollView scrollView;
     private CheckBox checkBox_read;
     private CheckBox checkbox_favorite;
-    private LinearLayout linearLayoutComment;
 
     private Book book;
     private SqlHelper database;
@@ -68,7 +68,6 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
         scrollView = (ScrollView) findViewById(R.id.scrollView);
         checkbox_favorite = (CheckBox) findViewById(R.id.checkbox_favorite);
         checkBox_read = (CheckBox) findViewById(R.id.checkbox_read);
-        linearLayoutComment = (LinearLayout) findViewById(R.id.linearLayoutComment);
 
         bookDescription.setMovementMethod(new ScrollingMovementMethod());
         bookComment.setMovementMethod(new ScrollingMovementMethod());
@@ -130,22 +129,18 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
 
         if (book.getDescription().length() == 0){
             bookDescription.setVisibility(View.GONE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) linearLayoutComment.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bookComment.getLayoutParams();
             params.addRule(RelativeLayout.BELOW,R.id.book_isbn);
 
         }else {
             bookDescription.setVisibility(View.VISIBLE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) linearLayoutComment.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bookComment.getLayoutParams();
             params.addRule(RelativeLayout.BELOW, R.id.book_description);
             bookDescription.setText(book.getDescription());
         }
 
-        if(book.getComment().length() == 0){
-            bookComment.setVisibility(View.GONE);
-        }else{
-            bookComment.setVisibility(View.VISIBLE);
-            bookComment.setText(book.getComment());
-        }
+        bookComment.setText(getString(R.string.label_comment,book.getComment()));
+
 
     }
 

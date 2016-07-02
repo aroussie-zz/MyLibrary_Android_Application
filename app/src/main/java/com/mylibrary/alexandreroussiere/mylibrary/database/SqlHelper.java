@@ -244,6 +244,151 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<Book> getToReadBooks(String userID){
+
+        Log.i(TAG, "getToReadBooks");
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Book> books = new ArrayList<>();
+        SimpleDateFormat dateAddedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat getDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+        String query = "SELECT book.isbn,book.title,book.author,book.official_rate," +
+                "book.year,book.cover_url,book.description,book.date_added,book.categories," +
+                "library.is_read,library.is_favorite,library.personal_rate,library.comment" +
+                " FROM book,library " +
+                "WHERE library.id_user=? " + "AND library.isbn_book=book.isbn AND library.is_read=0 " +
+                "ORDER BY book.date_added DESC";
+
+        Cursor cursor = db.rawQuery(query, new String[] {userID} );
+
+        Book book = null;
+        if (cursor.moveToFirst()){
+            do{
+                book = new Book();
+                book.setIsbns(cursor.getString(0));
+                book.setTitle(cursor.getString(1));
+                book.setAuthors(cursor.getString(2));
+                book.setRate(Float.parseFloat(cursor.getString(3)));
+                book.setYear(cursor.getString(4));
+                book.setUrlCover(cursor.getString(5));
+                book.setDescription(cursor.getString(6));
+
+                try {
+                    book.setDate_added(getDateFormat.format(dateAddedFormat.parse(cursor.getString(7))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                book.setCategories(cursor.getString(8));
+                book.setIsRead(Integer.parseInt(cursor.getString(9)) != 0);
+                book.setIsFavorite(Integer.parseInt(cursor.getString(10)) != 0);
+                book.setPersonalRate(Float.parseFloat(cursor.getString(11)));
+                book.setComment(cursor.getString(12));
+
+                books.add(book);
+            }while(cursor.moveToNext());
+        }
+
+        return books;
+
+    }
+
+    public ArrayList<Book> getReadBooks(String userID){
+
+        Log.i(TAG, "getReadBooks");
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Book> books = new ArrayList<>();
+        SimpleDateFormat dateAddedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat getDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+        String query = "SELECT book.isbn,book.title,book.author,book.official_rate," +
+                "book.year,book.cover_url,book.description,book.date_added,book.categories," +
+                "library.is_read,library.is_favorite,library.personal_rate,library.comment" +
+                " FROM book,library " +
+                "WHERE library.id_user=? " + "AND library.isbn_book=book.isbn AND library.is_read=1 " +
+                "ORDER BY book.date_added DESC";
+
+        Cursor cursor = db.rawQuery(query, new String[] {userID} );
+
+        Book book = null;
+        if (cursor.moveToFirst()){
+            do{
+                book = new Book();
+                book.setIsbns(cursor.getString(0));
+                book.setTitle(cursor.getString(1));
+                book.setAuthors(cursor.getString(2));
+                book.setRate(Float.parseFloat(cursor.getString(3)));
+                book.setYear(cursor.getString(4));
+                book.setUrlCover(cursor.getString(5));
+                book.setDescription(cursor.getString(6));
+
+                try {
+                    book.setDate_added(getDateFormat.format(dateAddedFormat.parse(cursor.getString(7))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                book.setCategories(cursor.getString(8));
+                book.setIsRead(Integer.parseInt(cursor.getString(9)) != 0);
+                book.setIsFavorite(Integer.parseInt(cursor.getString(10)) != 0);
+                book.setPersonalRate(Float.parseFloat(cursor.getString(11)));
+                book.setComment(cursor.getString(12));
+
+                books.add(book);
+            }while(cursor.moveToNext());
+        }
+
+        return books;
+
+    }
+
+    public ArrayList<Book> getFavoriteBooks(String userID){
+
+        Log.i(TAG, "getFavoriteBooks");
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Book> books = new ArrayList<>();
+        SimpleDateFormat dateAddedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat getDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+        String query = "SELECT book.isbn,book.title,book.author,book.official_rate," +
+                "book.year,book.cover_url,book.description,book.date_added,book.categories," +
+                "library.is_read,library.is_favorite,library.personal_rate,library.comment" +
+                " FROM book,library " +
+                "WHERE library.id_user=? " + "AND library.isbn_book=book.isbn AND " +
+                "library.is_favorite=1 " +
+                "ORDER BY book.date_added DESC";
+
+        Cursor cursor = db.rawQuery(query, new String[] {userID} );
+
+        Book book = null;
+        if (cursor.moveToFirst()){
+            do{
+                book = new Book();
+                book.setIsbns(cursor.getString(0));
+                book.setTitle(cursor.getString(1));
+                book.setAuthors(cursor.getString(2));
+                book.setRate(Float.parseFloat(cursor.getString(3)));
+                book.setYear(cursor.getString(4));
+                book.setUrlCover(cursor.getString(5));
+                book.setDescription(cursor.getString(6));
+
+                try {
+                    book.setDate_added(getDateFormat.format(dateAddedFormat.parse(cursor.getString(7))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                book.setCategories(cursor.getString(8));
+                book.setIsRead(Integer.parseInt(cursor.getString(9)) != 0);
+                book.setIsFavorite(Integer.parseInt(cursor.getString(10)) != 0);
+                book.setPersonalRate(Float.parseFloat(cursor.getString(11)));
+                book.setComment(cursor.getString(12));
+
+                books.add(book);
+            }while(cursor.moveToNext());
+        }
+
+        return books;
+
+    }
+
     public void deleteBook(Book book, String userID){
 
         SQLiteDatabase db = getWritableDatabase();

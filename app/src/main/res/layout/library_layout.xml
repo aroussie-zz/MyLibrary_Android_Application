@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/AppTheme"
     tools:context=".ui.LibraryActivity">
 
     <android.support.v7.widget.Toolbar android:id="@+id/my_toolbar"
@@ -18,27 +17,21 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_below="@+id/my_toolbar"
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/allBooks_list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:layout_below="@+id/my_toolbar" />
+        />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/empty_view_text"
-        android:id="@+id/empty_view"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:textStyle="bold|italic"
-        android:textSize="@dimen/empty_view_text"
-        android:textIsSelectable="false"
-        android:visibility="gone" />
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpPager"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/tabs">
+    </android.support.v4.view.ViewPager>
 
 
 </RelativeLayout>

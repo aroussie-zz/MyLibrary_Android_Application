@@ -1,18 +1,20 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -34,14 +36,15 @@ public class LibraryActivity extends BaseActivity{
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInAccount userAccount;
     private SqlHelper database;
-    private ArrayList<Book> books;
-    private RecyclerView recyclerView;
-    private TextView emptyView;
-    private LibraryAdapter adapter;
-    private Book book;
-    private AlertDialog.Builder dialogBuilder;
+    private ArrayList<Book> allBooks;
+    private ArrayList<Book> booksToRead;
+    private ArrayList<Book> readBooks;
+    private ArrayList<Book> favoriteBooks;
+    private ViewPager pager;
+    private PagerSlidingTabStrip tabs;
+    private MyPagerAdapter pagerAdapter;
 
-    final CharSequence[] items = {"Update","Delete"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -65,47 +68,8 @@ public class LibraryActivity extends BaseActivity{
             setUserAccount(userAccount);
         }
 
-        dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch(which){
-                    case 0:
-                        Intent updateBook = new Intent(LibraryActivity.this,UpdateBook.class);
-                        updateBook.putExtra("book",book);
-                        startActivity(updateBook);
-                        break;
-                    case 1:
-                        database.deleteBook(book,getUserAccount().getId());
-                        updateUI();
-                        break;
-                }
-            }
-        });
-
-        emptyView = (TextView) findViewById(R.id.empty_view);
-        recyclerView = (RecyclerView) findViewById(R.id.allBooks_list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter = new LibraryAdapter();
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new LibraryAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                book = adapter.getItem(position);
-
-                Intent seeBookDetail = new Intent(LibraryActivity.this,LibraryDetailActivity.class);
-                seeBookDetail.putExtra("book",book);
-                startActivity(seeBookDetail);
-
-            }
-        });
-        adapter.setOnItemLongClickListener(new LibraryAdapter.onItemLongClickListener() {
-            @Override
-            public void onItemLongClick(View v, int position) {
-                book = adapter.getItem(position);
-                dialogBuilder.create().show();
-            }
-        });
+        pager = (ViewPager) findViewById(R.id.vpPager);
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 
     }
 
@@ -116,21 +80,24 @@ public class LibraryActivity extends BaseActivity{
         }
         super.onStart();
         database = new SqlHelper(this);
-        updateUI();
+        allBooks = database.getAllBooks(getUserAccount().getId());
+        booksToRead = database.getToReadBooks(getUserAccount().getId());
+        readBooks = database.getReadBooks(getUserAccount().getId());
+        favoriteBooks = database.getFavoriteBooks(getUserAccount().getId());
+
+        pager.setOffscreenPageLimit(1);
+
+        if(pagerAdapter!=null){
+            pagerAdapter.notifyDataSetChanged();
+        }
+
+        pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),allBooks,booksToRead,readBooks,favoriteBooks);
+        pager.setAdapter(pagerAdapter);
+        tabs.setViewPager(pager);
+        tabs.setTextColor(Color.WHITE);
+
     }
 
-    public void updateUI(){
-        books = database.getAllBooks(getUserAccount().getId());
-        adapter.setData(books);
-        if (adapter.getItemCount() != 0) {
-            emptyView.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }else {
-            emptyView.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        }
-        adapter.notifyDataSetChanged();
-    }
 
     @Override
     protected void onStop() {
@@ -147,6 +114,76 @@ public class LibraryActivity extends BaseActivity{
         }
 
         super.onResume();
+    }
+
+    public  class MyPagerAdapter extends FragmentStatePagerAdapter {
+
+        //Define the number of tabs(pages)
+        private  int NUM_ITEMS = 4;
+
+        //Create a List with all the list of movies
+        private ArrayList<ArrayList<Book>>  allLists = new ArrayList<>();
+
+        //define the the title of the tabs
+        private final String[] TITLES = {"All", "To read","Read","Favorites"};
+
+        public MyPagerAdapter(FragmentManager fragmentManager, ArrayList<Book> all, ArrayList<Book> to_read,
+                              ArrayList<Book> read, ArrayList<Book> favorites) {
+            super(fragmentManager);
+
+            //Put each list of movies in the global one
+            allLists.add(0,all);
+            allLists.add(1,to_read);
+            allLists.add(2,read);
+            allLists.add(3,favorites);
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        // Returns the fragment to display for a particular page
+        @Override
+        public Fragment getItem(int position) {
+            Log.d(TAG, "position: " + position);
+            switch (position) {
+                case 0: return AllBooksFragment.newInstance(getUserAccount());
+                case 1: return ToReadBooksFragment.newInstance(getUserAccount());
+                case 2: return ReadBooksFragment.newInstance(getUserAccount());
+                case 3: return FavoriteBooksFragment.newInstance(getUserAccount());
+
+                default: return AllBooksFragment.newInstance(getUserAccount());
+
+            }
+        }
+
+        @Override
+        public Parcelable saveState() {
+            return null;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+        }
+
+
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return TITLES[position] + " (" + allLists.get(position).size() +")";
+
+        }
+
+        //this is called when notifyDataSetChanged() is called
+        @Override
+        public int getItemPosition(Object object) {
+            // refresh all fragments when data set changed
+            return PagerAdapter.POSITION_NONE;
+        }
+
     }
 
     @Override

@@ -223,36 +223,21 @@
                 android:clickable="true"
                 android:textIsSelectable="true" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/book_description"
-                android:layout_alignStart="@+id/label_book_year"
-                android:layout_marginTop="@dimen/margin_top_labels"
-                android:gravity="center_vertical"
-                android:id="@+id/linearLayoutComment">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/label_comment"
-                    android:id="@+id/label_book_comment"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:padding="@dimen/padding_description"
+                    android:layout_below="@+id/book_description"
+                    android:layout_alignStart="@+id/label_book_year"
+                    android:layout_marginTop="@dimen/margin_top_labels"
                     android:id="@+id/book_comment"
                     android:maxLines="4"
                     android:scrollbars="vertical"
                     android:clickable="true"
                     android:textIsSelectable="true" />
 
-            </LinearLayout>
 
 
             <LinearLayout
