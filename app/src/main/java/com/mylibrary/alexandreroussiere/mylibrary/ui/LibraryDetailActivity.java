@@ -1,6 +1,7 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,7 +50,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.library_book_detail);
+        setContentView(R.layout.library_book_detail_landscape);
 
         getSupportActionBar().setTitle("Book Detail");
         Bundle bundle = getIntent().getExtras();
@@ -139,7 +140,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
             bookDescription.setText(book.getDescription());
         }
 
-        bookComment.setText(getString(R.string.label_comment,book.getComment()));
+        bookComment.setText(Html.fromHtml(getString(R.string.label_comment,book.getComment())));
 
 
     }
