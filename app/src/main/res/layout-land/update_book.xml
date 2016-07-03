@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
->
+    >
 
 
     <android.support.v7.widget.Toolbar android:id="@+id/my_toolbar"
@@ -28,20 +28,36 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            android:id="@+id/parent">
+            android:paddingBottom="20dp">
 
 
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="190dp"
-                android:id="@+id/book_cover"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearLayoutGlobal"
+                android:padding="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/relativeLayoutCover"
+                android:layout_weight="1.25"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/book_cover"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/relativeLayoutInfo"
+            android:layout_weight="0.75">
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,8 +65,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/book_title"
                 android:layout_alignTop="@+id/label_book_title"
-                android:layout_toEndOf="@+id/label_book_title"
-                android:layout_marginLeft="20dp"/>
+                android:layout_toEndOf="@+id/label_book_title" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,10 +73,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/label_title"
                 android:id="@+id/label_book_title"
-                android:layout_below="@+id/book_cover"
                 android:layout_alignParentStart="true"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/margin_top_labels" />
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,7 +86,8 @@
                 android:layout_below="@+id/book_title"
                 android:layout_alignStart="@+id/label_book_title"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,8 +95,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/book_author"
                 android:layout_alignTop="@+id/label_book_author"
-                android:layout_toEndOf="@+id/label_book_author"
-                android:layout_marginLeft="20dp" />
+                android:layout_toEndOf="@+id/label_book_author" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -99,7 +113,8 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/label_officialRate"
                     android:id="@+id/label_book_officialRate"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/margin_right_labels" />
 
                 <RatingBar
                     android:layout_width="wrap_content"
@@ -107,8 +122,7 @@
                     android:id="@+id/book_officialRate"
                     style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
                     android:numStars="5"
-                    android:stepSize="0.25"
-                    android:layout_marginLeft="20dp" />
+                    android:stepSize="0.25" />
 
             </LinearLayout>
 
@@ -129,7 +143,8 @@
                     android:text="@string/label_personalRate"
                     android:id="@+id/label_book_personalRate"
                     android:labelFor="@+id/personalRate"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/margin_right_labels" />
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -137,7 +152,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:id="@+id/personalRate"
                     android:inputType="numberDecimal"
-                    android:layout_marginLeft="10dp"
                     android:imeOptions="actionDone"/>
 
                 <TextView
@@ -158,7 +172,8 @@
                 android:layout_below="@+id/linearLayoutPersonalRate"
                 android:layout_alignStart="@+id/linearLayoutPersonalRate"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -166,8 +181,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/book_year"
                 android:layout_alignTop="@+id/label_book_year"
-                android:layout_toEndOf="@+id/label_book_year"
-                android:layout_marginLeft="20dp" />
+                android:layout_toEndOf="@+id/label_book_year" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -185,14 +199,14 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/label_categories"
                     android:id="@+id/label_book_categories"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/margin_right_labels" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/book_categories"
-                    android:layout_marginLeft="20dp" />
+                    android:id="@+id/book_categories" />
             </LinearLayout>
 
             <TextView
@@ -204,7 +218,8 @@
                 android:layout_below="@+id/linearLayoutCategories"
                 android:layout_alignStart="@+id/linearLayoutCategories"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -212,9 +227,11 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/book_isbn"
                 android:layout_toEndOf="@+id/label_book_isbn"
-                android:layout_marginLeft="20dp"
                 android:layout_alignParentLeft="false"
                 android:layout_alignTop="@+id/label_book_isbn"/>
+
+            </RelativeLayout>
+            </LinearLayout>
 
             <EditText
                 android:layout_width="fill_parent"
@@ -222,13 +239,13 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:padding="@dimen/padding_description"
                 android:id="@+id/book_comment"
-                android:layout_below="@+id/book_isbn"
-                android:layout_alignStart="@+id/label_book_isbn"
-                android:layout_marginTop="@dimen/margin_top_labels"
+                android:layout_below="@+id/linearLayoutGlobal"
                 android:gravity="top"
                 android:scrollbars="vertical"
                 android:hint="@string/commentHint"
-                android:inputType="textMultiLine|textAutoComplete|textCapSentences"/>
+                android:inputType="textMultiLine|textAutoComplete|textCapSentences"
+                android:layout_marginLeft="@dimen/margin_sides_comment"
+                android:layout_marginRight="@dimen/margin_sides_comment" />
 
             <Button
                 android:layout_width="wrap_content"

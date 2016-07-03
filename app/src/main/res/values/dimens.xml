@@ -7,6 +7,7 @@
     <dimen name="margin_top_labels">20dp</dimen>
     <dimen name="margin_right_labels">15dp</dimen>
     <dimen name="margin_sides_description">10dp</dimen>
+    <dimen name="margin_sides_comment">10dp</dimen>
     <dimen name="padding_description">7dp</dimen>
     <dimen name="padding_comment">7dp</dimen>
 </resources>
