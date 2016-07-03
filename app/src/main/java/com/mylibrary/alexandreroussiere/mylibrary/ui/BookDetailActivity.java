@@ -1,7 +1,10 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -125,7 +128,11 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
         if (book.getDescription().length() == 0){
             bookDescription.setVisibility(View.GONE);
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) btnLayout.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW, R.id.book_isbn);
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                params.addRule(RelativeLayout.BELOW,R.id.linearLayoutGlobal);
+            }else{
+                params.addRule(RelativeLayout.BELOW, R.id.book_isbn);
+            }
 
         }else {
             bookDescription.setVisibility(View.VISIBLE);

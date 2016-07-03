@@ -1,5 +1,6 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
@@ -127,7 +128,11 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
         if (book.getDescription().length() == 0){
             bookDescription.setVisibility(View.GONE);
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bookComment.getLayoutParams();
-            params.addRule(RelativeLayout.BELOW,R.id.book_isbn);
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                params.addRule(RelativeLayout.BELOW,R.id.linearLayoutGlobal);
+            }else{
+                params.addRule(RelativeLayout.BELOW, R.id.book_isbn);
+            }
 
         }else {
             bookDescription.setVisibility(View.VISIBLE);
