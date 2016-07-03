@@ -151,6 +151,9 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             case R.id.btn_add:
                 database.addBook(book,getUserAccount().getId());
                 Toast.makeText(getApplicationContext(),"Book added to the library",Toast.LENGTH_LONG).show();
+                Intent goLibrary = new Intent(BookDetailActivity.this,LibraryActivity.class);
+                startActivity(goLibrary);
+                finish();
                 break;
         }
     }
