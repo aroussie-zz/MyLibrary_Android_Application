@@ -46,7 +46,6 @@
                 android:id="@+id/book_title"
                 android:layout_alignTop="@+id/label_book_title"
                 android:layout_toEndOf="@+id/label_book_title"
-                android:layout_marginLeft="20dp"
                 android:textIsSelectable="true" />
 
             <TextView
@@ -58,7 +57,8 @@
                 android:layout_below="@+id/book_cover"
                 android:layout_alignParentStart="true"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/margin_top_labels" />
+                android:layout_marginTop="@dimen/margin_top_labels"
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,7 +69,8 @@
                 android:layout_below="@+id/book_title"
                 android:layout_alignStart="@+id/label_book_title"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,7 +79,6 @@
                 android:id="@+id/book_author"
                 android:layout_alignTop="@+id/label_book_author"
                 android:layout_toEndOf="@+id/label_book_author"
-                android:layout_marginLeft="20dp"
                 android:textIsSelectable="true" />
 
             <LinearLayout
@@ -97,7 +97,8 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/label_officialRate"
                     android:id="@+id/label_book_officialRate"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/margin_right_labels" />
 
                 <RatingBar
                     android:layout_width="wrap_content"
@@ -105,8 +106,7 @@
                     android:id="@+id/book_officialRate"
                     style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
                     android:numStars="5"
-                    android:stepSize="0.25"
-                    android:layout_marginLeft="20dp" />
+                    android:stepSize="0.25" />
 
             </LinearLayout>
 
@@ -126,7 +126,8 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/label_personalRate"
                     android:id="@+id/label_book_personalRate"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/margin_right_labels" />
 
                 <RatingBar
                     android:layout_width="wrap_content"
@@ -134,8 +135,7 @@
                     android:id="@+id/book_personalRate"
                     style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
                     android:numStars="5"
-                    android:stepSize="0.25"
-                    android:layout_marginLeft="20dp" />
+                    android:stepSize="0.25" />
 
             </LinearLayout>
 
@@ -148,7 +148,8 @@
                 android:layout_below="@+id/linearLayoutPersonalRate"
                 android:layout_alignStart="@+id/linearLayoutPersonalRate"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -156,8 +157,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/book_year"
                 android:layout_alignTop="@+id/label_book_year"
-                android:layout_toEndOf="@+id/label_book_year"
-                android:layout_marginLeft="20dp" />
+                android:layout_toEndOf="@+id/label_book_year" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -175,14 +175,14 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/label_categories"
                     android:id="@+id/label_book_categories"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="@dimen/margin_right_labels" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/book_categories"
-                    android:layout_marginLeft="20dp" />
+                    android:id="@+id/book_categories" />
             </LinearLayout>
 
             <TextView
@@ -194,7 +194,8 @@
                 android:layout_below="@+id/linearLayoutCategories"
                 android:layout_alignStart="@+id/linearLayoutCategories"
                 android:layout_marginTop="@dimen/margin_top_labels"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/margin_right_labels" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -202,7 +203,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/book_isbn"
                 android:layout_toEndOf="@+id/label_book_isbn"
-                android:layout_marginLeft="20dp"
                 android:layout_alignParentLeft="false"
                 android:layout_alignTop="@+id/label_book_isbn"
                 android:textIsSelectable="true" />
@@ -211,7 +211,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:padding="@dimen/padding_description"
                 android:id="@+id/book_description"
                 android:layout_below="@+id/book_isbn"
                 android:layout_alignStart="@+id/label_book_isbn"
@@ -221,14 +220,15 @@
                 android:maxLines="4"
                 android:scrollbars="vertical"
                 android:clickable="true"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:paddingRight="@dimen/padding_description"
+                android:singleLine="false" />
 
 
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:padding="@dimen/padding_description"
                     android:layout_below="@+id/book_description"
                     android:layout_alignStart="@+id/label_book_year"
                     android:layout_marginTop="@dimen/margin_top_labels"
@@ -236,7 +236,8 @@
                     android:maxLines="4"
                     android:scrollbars="vertical"
                     android:clickable="true"
-                    android:textIsSelectable="true" />
+                    android:textIsSelectable="true"
+                    android:paddingRight="@dimen/padding_comment" />
 
 
 

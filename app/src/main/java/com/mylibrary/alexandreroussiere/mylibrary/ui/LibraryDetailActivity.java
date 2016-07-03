@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -36,7 +35,6 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
     private TextView bookCategories;
     private TextView bookDescription;
     private TextView bookComment;
-    private TextView bookCommentLabel;
     private RatingBar bookPersonalRate;
     private RatingBar bookOfficialRate;
     private ImageView bookCover;
@@ -50,7 +48,7 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.library_book_detail_landscape);
+        setContentView(R.layout.library_book_detail);
 
         getSupportActionBar().setTitle("Book Detail");
         Bundle bundle = getIntent().getExtras();
@@ -90,7 +88,6 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
             public boolean onTouch(View v, MotionEvent event) {
 
                 bookDescription.getParent().requestDisallowInterceptTouchEvent(true);
-               // bookComment.getParent().requestDisallowInterceptTouchEvent(false);
                 return false;
             }
         });
@@ -98,7 +95,6 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
         bookComment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-               // bookDescription.getParent().requestDisallowInterceptTouchEvent(false);
                 bookComment.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
             }
