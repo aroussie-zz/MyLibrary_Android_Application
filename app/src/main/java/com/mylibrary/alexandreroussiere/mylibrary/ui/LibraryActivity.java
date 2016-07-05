@@ -43,7 +43,7 @@ public class LibraryActivity extends BaseActivity{
     private ViewPager pager;
     private PagerSlidingTabStrip tabs;
     private MyPagerAdapter pagerAdapter;
-
+    private static ArrayList<ArrayList<Book>> allLists = new ArrayList<>();
 
 
     @Override
@@ -116,38 +116,46 @@ public class LibraryActivity extends BaseActivity{
         super.onResume();
     }
 
+    public void updatePager(){
+        allBooks = database.getAllBooks(getUserAccount().getId());
+        booksToRead = database.getToReadBooks(getUserAccount().getId());
+        readBooks = database.getReadBooks(getUserAccount().getId());
+        favoriteBooks = database.getFavoriteBooks(getUserAccount().getId());
+
+        allLists.add(0,allBooks);
+        allLists.add(1,booksToRead);
+        allLists.add(2,readBooks);
+        allLists.add(3,favoriteBooks);
+
+        pagerAdapter.notifyDataSetChanged();
+        tabs.notifyDataSetChanged();
+
+    }
+
     public  class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-        //Define the number of tabs(pages)
         private  int NUM_ITEMS = 4;
 
-        //Create a List with all the list of movies
-        private ArrayList<ArrayList<Book>>  allLists = new ArrayList<>();
-
-        //define the the title of the tabs
         private final String[] TITLES = {"All", "To read","Read","Favorites"};
 
         public MyPagerAdapter(FragmentManager fragmentManager, ArrayList<Book> all, ArrayList<Book> to_read,
                               ArrayList<Book> read, ArrayList<Book> favorites) {
             super(fragmentManager);
 
-            //Put each list of movies in the global one
             allLists.add(0,all);
             allLists.add(1,to_read);
             allLists.add(2,read);
             allLists.add(3,favorites);
         }
 
-        // Returns total number of pages
         @Override
         public int getCount() {
             return NUM_ITEMS;
         }
 
-        // Returns the fragment to display for a particular page
         @Override
         public Fragment getItem(int position) {
-            Log.d(TAG, "position: " + position);
+
             switch (position) {
                 case 0: return AllBooksFragment.newInstance(getUserAccount());
                 case 1: return ToReadBooksFragment.newInstance(getUserAccount());
@@ -169,12 +177,9 @@ public class LibraryActivity extends BaseActivity{
             super.destroyItem(container, position, object);
         }
 
-
-        // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
             return TITLES[position] + " (" + allLists.get(position).size() +")";
-
         }
 
         //this is called when notifyDataSetChanged() is called
@@ -185,6 +190,8 @@ public class LibraryActivity extends BaseActivity{
         }
 
     }
+
+
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

@@ -119,4 +119,6 @@ public class ReadBooksFragment extends Fragment {
     }
 
     private void setUserAccount(GoogleSignInAccount account){ userAccount = account; }
+    public int getNumberBooks() { return books.size(); }
+
 }

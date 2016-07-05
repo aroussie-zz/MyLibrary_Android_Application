@@ -70,6 +70,8 @@ public class AllBooksFragment extends Fragment {
                         break;
                     case 1:
                         database.deleteBook(book,userAccount.getId());
+                        adapter.notifyDataSetChanged();
+                        ((LibraryActivity)getActivity()).updatePager();
                         updateUI();
                         break;
                 }
@@ -118,5 +120,5 @@ public class AllBooksFragment extends Fragment {
     }
 
     private void setUserAccount(GoogleSignInAccount account){ userAccount = account; }
-
+    public int getNumberBooks() { return books.size(); }
 }
