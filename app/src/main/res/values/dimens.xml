@@ -10,4 +10,5 @@
     <dimen name="margin_sides_comment">10dp</dimen>
     <dimen name="padding_description">7dp</dimen>
     <dimen name="padding_comment">7dp</dimen>
+    <dimen name="App_name">35dp</dimen>
 </resources>

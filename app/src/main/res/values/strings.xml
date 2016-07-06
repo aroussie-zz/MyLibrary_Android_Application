@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyLibrary</string>
     <string name="server_client_id"> 1026175740513-91dmfqd74grkq5olk0nl06s7suur4ps9.apps.googleusercontent.com </string>
+    <string name="login_page_title">My Book Library</string>
     <string name="signed_out">Signed out</string>
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="loading">Loading…</string>
