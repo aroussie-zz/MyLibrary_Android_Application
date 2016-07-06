@@ -1,14 +1,9 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +22,6 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -86,7 +79,6 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             public boolean onTouch(View v, MotionEvent event) {
 
                 bookDescription.getParent().requestDisallowInterceptTouchEvent(false);
-
                 return false;
             }
         });
@@ -98,7 +90,6 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
             public boolean onTouch(View v, MotionEvent event) {
 
                 bookDescription.getParent().requestDisallowInterceptTouchEvent(true);
-
                 return false;
             }
         });
@@ -153,7 +144,7 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()){
             case R.id.btn_back:
                 finish();
                 break;

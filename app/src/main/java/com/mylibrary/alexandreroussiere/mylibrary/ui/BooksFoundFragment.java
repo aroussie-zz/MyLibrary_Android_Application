@@ -113,7 +113,6 @@ public class BooksFoundFragment extends Fragment{
 
     public void updateUI(){
         books = database.findBooksInLibrary(query,userAccount.getId());
-        Log.d(TAG, "books size:" + books.size() );
         adapter.setData(books);
         if (adapter.getItemCount() != 0) {
             emptyView.setVisibility(View.GONE);

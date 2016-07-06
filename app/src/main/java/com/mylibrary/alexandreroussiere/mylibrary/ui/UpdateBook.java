@@ -1,27 +1,20 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
 import android.app.Activity;
-import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.api.model.GetAccountInfoUser;
 import com.mylibrary.alexandreroussiere.mylibrary.R;
 import com.mylibrary.alexandreroussiere.mylibrary.database.SqlHelper;
 import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
@@ -45,7 +38,6 @@ public class UpdateBook extends BaseActivity implements View.OnFocusChangeListen
     private EditText bookPersonalRate;
     private RatingBar bookOfficialRate;
     private ImageView bookCover;
-    private ScrollView scrollView;
     private Button btn_update;
 
     private Book book;
@@ -69,14 +61,12 @@ public class UpdateBook extends BaseActivity implements View.OnFocusChangeListen
         bookPersonalRate = (EditText) findViewById(R.id.personalRate);
         bookOfficialRate = (RatingBar) findViewById(R.id.book_officialRate);
         bookCover = (ImageView) findViewById(R.id.book_cover);
-        scrollView = (ScrollView) findViewById(R.id.scrollView);
         btn_update = (Button) findViewById(R.id.btn_update);
 
         bookComment.setMovementMethod(new ScrollingMovementMethod());
 
         bookPersonalRate.setOnFocusChangeListener(this);
         bookComment.setOnFocusChangeListener(this);
-
 
         btn_update.setOnClickListener(this);
 

@@ -39,7 +39,6 @@ public class AllBooksFragment extends Fragment {
 
     final String TAG = "AllBooksFragment";
     final CharSequence[] items = {"Update","Delete"};
-    final CharSequence[] answers = {"NO","YES"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -111,7 +110,6 @@ public class AllBooksFragment extends Fragment {
 
     public void updateUI(){
         books = database.getAllBooks(userAccount.getId());
-        Log.d(TAG, "books size:" + books.size() );
         adapter.setData(books);
         if (adapter.getItemCount() != 0) {
             emptyView.setVisibility(View.GONE);
@@ -129,7 +127,6 @@ public class AllBooksFragment extends Fragment {
         f.setUserAccount(account);
         return f;
     }
-
 
     private void setUserAccount(GoogleSignInAccount account){ userAccount = account; }
 }

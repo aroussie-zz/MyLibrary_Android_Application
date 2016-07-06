@@ -2,15 +2,12 @@ package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
 import android.app.ProgressDialog;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +18,6 @@ import com.mylibrary.alexandreroussiere.mylibrary.network.OnDataFetchedListener;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alexandre Roussière on 19/05/2016.
@@ -69,7 +65,6 @@ public class SearchBookActivity extends BaseActivity implements OnDataFetchedLis
 
     @Override
     public void onNewIntent(Intent intent){
-
 
         handleIntent(intent);
         presenter.fetchData(query);

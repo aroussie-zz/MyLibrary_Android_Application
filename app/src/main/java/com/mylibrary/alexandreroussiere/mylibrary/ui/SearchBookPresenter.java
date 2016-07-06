@@ -1,9 +1,6 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
-import android.app.ProgressDialog;
 import android.util.Log;
-
-
 import com.mylibrary.alexandreroussiere.mylibrary.Constant;
 import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
 import com.mylibrary.alexandreroussiere.mylibrary.network.BookService;
@@ -12,7 +9,6 @@ import com.squareup.okhttp.OkHttpClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.Call;
@@ -45,7 +41,6 @@ public class SearchBookPresenter {
                 return response;
             }
         });
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constant.BASE_URL)

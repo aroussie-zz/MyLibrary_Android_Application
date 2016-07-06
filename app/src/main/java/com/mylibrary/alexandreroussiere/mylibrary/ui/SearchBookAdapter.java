@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.mylibrary.alexandreroussiere.mylibrary.R;
 import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
 import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

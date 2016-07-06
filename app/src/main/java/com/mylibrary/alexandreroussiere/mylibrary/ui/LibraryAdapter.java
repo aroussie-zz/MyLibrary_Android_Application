@@ -26,7 +26,6 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
     private onItemClickListener itemClickListener;
     private onItemLongClickListener itemLongClickListener;
 
-
     @Override
     public LibraryRowHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.library_row,null);
@@ -46,7 +45,6 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
         }else {
             Picasso.with(mContext).load(book.getUrlNormalCover()).into(holder.cover);
         }
-
     }
 
     @Override
@@ -73,7 +71,6 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryR
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
-
 
         @Override
         public void onClick(View v) {
