@@ -59,7 +59,7 @@ public class SearchBookPresenter {
     public void fetchData(String query){
 
 
-        Call<BookService.BookAnswer> result = service.findBook(query,Constant.KEY_API);
+        Call<BookService.BookAnswer> result = service.findBook(query,Constant.KEY_API,Constant.NUMBER_RESULT);
         result.enqueue(new Callback<BookService.BookAnswer>() {
             @Override
             public void onResponse(Response<BookService.BookAnswer> response, Retrofit retrofit) {
@@ -90,21 +90,5 @@ public class SearchBookPresenter {
         }
         return books;
     }
-
-/*
-    @Override
-    public okhttp3.Response intercept(Chain chain) throws IOException {
-
-        Request request = chain.request();
-        request = request.newBuilder()
-                .addHeader("key","AIzaSyBAxY-0rFGM_6s-7GZE0PJtPeXkSbNoSFQ")
-                .build();
-
-        okhttp3.Response response = chain.proceed(request);
-        Log.i(TAG, "response: " + response.toString());
-        return  response;
-
-    }
-*/
 
 }

@@ -16,7 +16,8 @@ import java.util.List;
 public interface BookService {
 
     @GET("books/v1/volumes")
-    Call<BookAnswer> findBook(@Query("q") String query, @Query("key") String keyAPI );
+    Call<BookAnswer> findBook(@Query("q") String query, @Query("key") String keyAPI,
+                              @Query("maxResults") int numberMax );
 
     class BookAnswer{
 
