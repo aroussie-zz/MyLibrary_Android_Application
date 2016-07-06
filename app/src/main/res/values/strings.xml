@@ -7,14 +7,16 @@
     <string name="logout">Logout</string>
 
 
-    <!-- SearchView -->
-    <string name="search_hint_book">Search Book</string>
+    <!-- Google SearchView -->
+    <string name="search_hint_book">Find a new book</string>
 
     <!-- SearchBook Activity -->
     <string name="empty_view_text">No Book Found</string>
     <string name="search_title">Search</string>
     <string name="searchBookActivity_toolbar_title">Search books</string>
 
+    <!-- Library searchView -->
+    <string name="search_hint_book_library">Find in library</string>
 
 
     <!--BookDetail Activity -->

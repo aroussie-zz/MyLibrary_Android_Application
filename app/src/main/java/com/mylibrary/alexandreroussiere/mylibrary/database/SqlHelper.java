@@ -23,17 +23,13 @@ public class SqlHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "SqlHelper";
 
-    // Database Version
     private static final int DATABASE_VERSION = 1;
-    // Database Name
     private static final String DATABASE_NAME = "MyLibraryDB";
 
-    // Books table name
     private static final String TABLE_BOOK = "book";
     private static final String TABLE_LIBRARY = "library";
     private static final String TABLE_USER = "user_app";
 
-    // Book Table Columns names
     private static final String KEY_ISBN_BOOK = "isbn";
     private static final String KEY_TITLE = "title";
     private static final String KEY_AUTHOR= "author";
@@ -44,8 +40,6 @@ public class SqlHelper extends SQLiteOpenHelper {
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_DATE_ADDED = "date_added";
 
-
-    // Library Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_BOOK_ISBN = "isbn_book";
     private static final String KEY_ID_USER = "id_user";
@@ -54,8 +48,6 @@ public class SqlHelper extends SQLiteOpenHelper {
     private static final String KEY_PERSO_RATE = "personal_rate";
     private static final String KEY_COMMENT= "comment";
 
-
-    //User Table columns names
     private static final String KEY_TOKEN_USER = "token";
     private static final String KEY_NAME_USER = "name";
     private static final String KEY_MAIL_USER = "mail";
@@ -95,7 +87,6 @@ public class SqlHelper extends SQLiteOpenHelper {
                 "name TEXT, "+
                 "mail TEXT)";
 
-        //create movie and movie_library tables
         db.execSQL(CREATE_BOOK_TABLE);
         db.execSQL(CREATE_USER_TABLE);
         db.execSQL(CREATE_LIBRARY_TABLE);
@@ -109,14 +100,12 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS library");
         db.execSQL("DROP TABLE IF EXISTS user_app");
 
-        // create fresh books table
         this.onCreate(db);
     }
 
     public void addUser(GoogleSignInAccount userAccount){
         Log.i(TAG,"add user");
 
-        // get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -148,10 +137,8 @@ public class SqlHelper extends SQLiteOpenHelper {
     public void addBook(Book book,String userID){
         Log.i(TAG,"add book: " + book.getTitle());
 
-        // get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // set the format to sql date time
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date_added = new Date();
 
@@ -163,7 +150,6 @@ public class SqlHelper extends SQLiteOpenHelper {
 
         categories += book.getCategories().get(i);
 
-        // create ContentValues to add key "column"/value into movie table
         ContentValues values = new ContentValues();
         values.put(KEY_ISBN_BOOK, book.getISBN());
         values.put(KEY_TITLE, book.getTitle());
@@ -176,7 +162,6 @@ public class SqlHelper extends SQLiteOpenHelper {
         values.put(KEY_COVER_URL,book.getUrlNormalCover());
 
 
-        //Values for movie_library table
         ContentValues values_library = new ContentValues();
         values_library.put(KEY_BOOK_ISBN,book.getISBN());
         values_library.put(KEY_ID_USER,userID);
@@ -185,15 +170,13 @@ public class SqlHelper extends SQLiteOpenHelper {
         values_library.put(KEY_COMMENT,"");
         values_library.put(KEY_PERSO_RATE, 0);
 
-        // insert
-        db.insert(TABLE_BOOK, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/values
+        if(!bookAlreadyInDatabase(book)){
+            db.insert(TABLE_BOOK, null, values);
+        }
 
         db.insert(TABLE_LIBRARY,null,values_library);
 
         Log.d("Book added: ",book.getTitle());
-        // 4. Close dbase
         db.close();
     }
 
@@ -433,6 +416,75 @@ public class SqlHelper extends SQLiteOpenHelper {
         db.execSQL(query,new String[]{ book.getISBN(), userID});
         Log.d("UpdateFavoriteColumn: ", "column updated with: " + (book.getIsFavorite() ? 1 : 0) );
 
+    }
+
+    public boolean bookAlreadyInLibrary(Book book, String userID){
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM library where isbn_book=? AND id_user=?";
+        Cursor cursor = db.rawQuery(query,new String[] {book.getISBN(),userID});
+        if (cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public ArrayList<Book> findBooksInLibrary(String text, String userID){
+        SQLiteDatabase db = getWritableDatabase();
+        ArrayList<Book> books = new ArrayList<>();
+        SimpleDateFormat dateAddedFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat getDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+        String query = "SELECT book.isbn,book.title,book.author,book.official_rate," +
+        "book.year,book.cover_url,book.description,book.date_added,book.categories," +
+                "library.is_read,library.is_favorite,library.personal_rate,library.comment" +
+                " FROM book,library WHERE library.id_user=? AND library.isbn_book=book.isbn AND " +
+                "(book.title LIKE ? OR book.author LIKE ? ) ORDER BY book.date_added DESC";
+        Cursor cursor = db.rawQuery(query,new String[]{userID,text + "%",text + "%"});
+
+        Log.d(TAG, "query: " + cursor.toString());
+
+        Book book = null;
+        if (cursor.moveToFirst()){
+            do{
+                book = new Book();
+                book.setIsbns(cursor.getString(0));
+                book.setTitle(cursor.getString(1));
+                book.setAuthors(cursor.getString(2));
+                book.setRate(Float.parseFloat(cursor.getString(3)));
+                book.setYear(cursor.getString(4));
+                book.setUrlCover(cursor.getString(5));
+                book.setDescription(cursor.getString(6));
+
+                try {
+                    book.setDate_added(getDateFormat.format(dateAddedFormat.parse(cursor.getString(7))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                book.setCategories(cursor.getString(8));
+                book.setIsRead(Integer.parseInt(cursor.getString(9)) != 0);
+                book.setIsFavorite(Integer.parseInt(cursor.getString(10)) != 0);
+                book.setPersonalRate(Float.parseFloat(cursor.getString(11)));
+                book.setComment(cursor.getString(12));
+
+                books.add(book);
+            }while(cursor.moveToNext());
+        }
+
+        return books;
+
+    }
+
+    private boolean bookAlreadyInDatabase(Book book){
+        SQLiteDatabase db = getWritableDatabase();
+        String query="SELECT * from book WHERE isbn = ?";
+        Cursor cursor = db.rawQuery(query, new String[] {book.getISBN()});
+
+        if(cursor.moveToFirst()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

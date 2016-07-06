@@ -11,8 +11,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.auth.api.Auth;
@@ -40,10 +42,14 @@ public class LibraryActivity extends BaseActivity{
     private ArrayList<Book> booksToRead;
     private ArrayList<Book> readBooks;
     private ArrayList<Book> favoriteBooks;
+    private ArrayList<Book> booksFound;
+    private SearchView searchView;
     private ViewPager pager;
     private PagerSlidingTabStrip tabs;
     private MyPagerAdapter pagerAdapter;
     private static ArrayList<ArrayList<Book>> allLists = new ArrayList<>();
+    private DetailOnPageChangeListener detailOnPageChangeListener;
+
 
 
     @Override
@@ -64,13 +70,15 @@ public class LibraryActivity extends BaseActivity{
 
         Intent i = getIntent();
         userAccount = (GoogleSignInAccount) i.getParcelableExtra("user");
-        if(userAccount != null){
+
+        if (userAccount != null){
             setUserAccount(userAccount);
         }
 
         pager = (ViewPager) findViewById(R.id.vpPager);
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setQueryHint("Search into my library");
     }
 
     @Override
@@ -79,6 +87,8 @@ public class LibraryActivity extends BaseActivity{
             mGoogleApiClient.connect();
         }
         super.onStart();
+        detailOnPageChangeListener = new DetailOnPageChangeListener();
+        booksFound = new ArrayList<>();
         database = new SqlHelper(this);
         allBooks = database.getAllBooks(getUserAccount().getId());
         booksToRead = database.getToReadBooks(getUserAccount().getId());
@@ -93,8 +103,31 @@ public class LibraryActivity extends BaseActivity{
 
         pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),allBooks,booksToRead,readBooks,favoriteBooks);
         pager.setAdapter(pagerAdapter);
+        pager.addOnPageChangeListener(detailOnPageChangeListener);
         tabs.setViewPager(pager);
         tabs.setTextColor(Color.WHITE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                pagerAdapter.setQuery(newText);
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                pagerAdapter.setUserIsSearchingBook(false);
+                pagerAdapter.notifyDataSetChanged();
+                return false;
+            }
+        });
 
     }
 
@@ -135,18 +168,21 @@ public class LibraryActivity extends BaseActivity{
     public  class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         private  int NUM_ITEMS = 4;
+        private boolean userIsSearchingBook = false;
+        private String queryUser = "";
 
         private final String[] TITLES = {"All", "To read","Read","Favorites"};
 
         public MyPagerAdapter(FragmentManager fragmentManager, ArrayList<Book> all, ArrayList<Book> to_read,
                               ArrayList<Book> read, ArrayList<Book> favorites) {
             super(fragmentManager);
-
             allLists.add(0,all);
             allLists.add(1,to_read);
             allLists.add(2,read);
             allLists.add(3,favorites);
+
         }
+
 
         @Override
         public int getCount() {
@@ -155,12 +191,31 @@ public class LibraryActivity extends BaseActivity{
 
         @Override
         public Fragment getItem(int position) {
-
             switch (position) {
-                case 0: return AllBooksFragment.newInstance(getUserAccount());
-                case 1: return ToReadBooksFragment.newInstance(getUserAccount());
-                case 2: return ReadBooksFragment.newInstance(getUserAccount());
-                case 3: return FavoriteBooksFragment.newInstance(getUserAccount());
+                case 0:
+                    if(userIsSearchingBook){
+                        return BooksFoundFragment.newInstance(getUserAccount(),queryUser);
+                    }else{
+                        return AllBooksFragment.newInstance(getUserAccount());
+                    }
+                case 1:
+                    if(userIsSearchingBook){
+                        return BooksFoundFragment.newInstance(getUserAccount(),queryUser);
+                    }else{
+                        return ToReadBooksFragment.newInstance(getUserAccount());
+                    }
+                case 2:
+                    if(userIsSearchingBook){
+                        return BooksFoundFragment.newInstance(getUserAccount(),queryUser);
+                    }else{
+                        return ReadBooksFragment.newInstance(getUserAccount());
+                    }
+                case 3:
+                    if(userIsSearchingBook){
+                        return BooksFoundFragment.newInstance(getUserAccount(),queryUser);
+                    }else{
+                        return FavoriteBooksFragment.newInstance(getUserAccount());
+                    }
 
                 default: return AllBooksFragment.newInstance(getUserAccount());
 
@@ -189,6 +244,30 @@ public class LibraryActivity extends BaseActivity{
             return PagerAdapter.POSITION_NONE;
         }
 
+        public void setQuery(String query){
+
+            userIsSearchingBook = true;
+            queryUser = query;
+            notifyDataSetChanged();
+        }
+
+
+        public void setUserIsSearchingBook(boolean bool){ userIsSearchingBook = bool;}
+
+    }
+
+    public class DetailOnPageChangeListener extends ViewPager.SimpleOnPageChangeListener {
+
+        private int currentPage;
+
+        @Override
+        public void onPageSelected(int position) {
+            currentPage = position;
+        }
+
+        public final int getCurrentPage() {
+            return currentPage;
+        }
     }
 
 

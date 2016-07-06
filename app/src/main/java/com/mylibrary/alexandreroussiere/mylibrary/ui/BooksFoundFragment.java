@@ -22,9 +22,9 @@ import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
 import java.util.ArrayList;
 
 /**
- * Created by Alexandre Roussière on 17/06/2016.
+ * Created by Alexandre Roussière on 05/07/2016.
  */
-public class AllBooksFragment extends Fragment {
+public class BooksFoundFragment extends Fragment{
 
     private View view;
     private RecyclerView recyclerView;
@@ -36,8 +36,9 @@ public class AllBooksFragment extends Fragment {
     private SqlHelper database;
     private static ArrayList<Book> books;
     private static GoogleSignInAccount userAccount;
+    private String query;
 
-    final String TAG = "AllBooksFragment";
+    final String TAG = "BooksFoundFragment";
     final CharSequence[] items = {"Update","Delete"};
 
     @Override
@@ -55,9 +56,10 @@ public class AllBooksFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
-
+        query = getArguments().getString("query");
         database = new SqlHelper(context);
         updateUI();
+
         dialogBuilder = new AlertDialog.Builder(context);
         dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
@@ -100,7 +102,7 @@ public class AllBooksFragment extends Fragment {
     }
 
     public void updateUI(){
-        books = database.getAllBooks(userAccount.getId());
+        books = database.findBooksInLibrary(query,userAccount.getId());
         Log.d(TAG, "books size:" + books.size() );
         adapter.setData(books);
         if (adapter.getItemCount() != 0) {
@@ -114,12 +116,14 @@ public class AllBooksFragment extends Fragment {
     }
 
 
-    public static AllBooksFragment newInstance(GoogleSignInAccount account){
-        AllBooksFragment f = new AllBooksFragment();
+    public static BooksFoundFragment newInstance(GoogleSignInAccount account,String query){
+        BooksFoundFragment f = new BooksFoundFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("query",query);
+        f.setArguments(bundle);
         f.setUserAccount(account);
         return f;
     }
-
-
     private void setUserAccount(GoogleSignInAccount account){ userAccount = account; }
 }
