@@ -2,13 +2,9 @@ package com.mylibrary.alexandreroussiere.mylibrary.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 /**
  * Created by Alexandre Roussière on 19/05/2016.
@@ -177,8 +173,6 @@ public class Book implements Parcelable {
         is_read = pc.readByte() != 0;
         is_favorite = pc.readByte() != 0;
 
-
-
     }
 
     class Cover{
@@ -207,6 +201,5 @@ public class Book implements Parcelable {
         }
         public String getIdentifier() { return identifier; }
     }
-
 
 }

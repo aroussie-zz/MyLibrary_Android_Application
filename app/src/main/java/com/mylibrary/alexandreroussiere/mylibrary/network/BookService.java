@@ -3,12 +3,9 @@ package com.mylibrary.alexandreroussiere.mylibrary.network;
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Query;
-
 import com.google.gson.annotations.SerializedName;
 import com.mylibrary.alexandreroussiere.mylibrary.model.Book;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Alexandre Roussière on 20/05/2016.
