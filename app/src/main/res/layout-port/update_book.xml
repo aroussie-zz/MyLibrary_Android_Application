@@ -28,20 +28,17 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp"
             android:clickable="true"
             android:focusableInTouchMode="true"
-            android:id="@+id/parent">
+            android:id="@+id/parent"
+            android:padding="@dimen/padding_layout">
 
 
             <ImageView
                 android:layout_width="130dp"
                 android:layout_height="190dp"
                 android:id="@+id/book_cover"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp" />
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:layout_width="wrap_content"

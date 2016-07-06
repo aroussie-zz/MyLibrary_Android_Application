@@ -70,8 +70,20 @@ public class ReadBooksFragment extends Fragment {
                         startActivity(updateBook);
                         break;
                     case 1:
-                        database.deleteBook(book,userAccount.getId());
-                        updateUI();
+                        new AlertDialog.Builder(context)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setMessage("Are you sure you want to delete this book?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        database.deleteBook(book, userAccount.getId());
+                                        adapter.notifyDataSetChanged();
+                                        ((LibraryActivity) getActivity()).updatePager();
+                                        updateUI();
+                                    }
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
                         break;
                 }
             }

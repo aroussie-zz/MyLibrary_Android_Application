@@ -3,12 +3,23 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- Book and Library row layouts -->
+    <dimen name="picture_width">100dp</dimen>
+    <dimen name="picture_height">155dp</dimen>
+
+    <!-- Book Details layouts -->
     <dimen name="empty_view_text">32sp</dimen>
     <dimen name="margin_top_labels">20dp</dimen>
     <dimen name="margin_right_labels">15dp</dimen>
     <dimen name="margin_sides_description">10dp</dimen>
     <dimen name="margin_sides_comment">10dp</dimen>
+    <dimen name="margin_buttons">30dp</dimen>
+    <dimen name="margin_checkboxes">35dp</dimen>
+
     <dimen name="padding_description">7dp</dimen>
     <dimen name="padding_comment">7dp</dimen>
+    <dimen name="padding_layout">20dp</dimen>
+
+    <!-- Login layout -->
     <dimen name="App_name">35dp</dimen>
 </resources>

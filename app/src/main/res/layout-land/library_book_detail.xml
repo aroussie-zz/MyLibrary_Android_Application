@@ -28,7 +28,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp">
+            android:padding="@dimen/padding_layout">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -54,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/checkbox_read"
-                        android:layout_marginBottom="35dp"
+                        android:layout_marginBottom="@dimen/margin_checkboxes"
                         android:button="@drawable/checkbox_is_read_selector"/>
 
                     <CheckBox
@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.50"
-                    android:padding="20dp">
+                    android:padding="@dimen/padding_layout">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -261,7 +261,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="false"
                 android:layout_below="@+id/linearLayoutGlobal"
-                android:paddingBottom="20dp">
+                android:paddingBottom="@dimen/padding_layout">
 
                 <TextView
                     android:layout_width="fill_parent"

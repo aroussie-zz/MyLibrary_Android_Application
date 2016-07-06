@@ -1,9 +1,11 @@
 package com.mylibrary.alexandreroussiere.mylibrary.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -159,16 +161,20 @@ public class BookDetailActivity extends BaseActivity implements View.OnClickList
                 if (database.bookAlreadyInLibrary(book,getUserAccount().getId())){
                     Toast.makeText(getApplicationContext(),"Book already in your library",
                             Toast.LENGTH_LONG).show();
+                    break;
                 }else{
                     database.addBook(book,getUserAccount().getId());
-                    Toast.makeText(getApplicationContext(),"Book added to the library",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Book added to the " +
+                            "library",Toast.LENGTH_LONG).show();
                     Intent goLibrary = new Intent(BookDetailActivity.this,LibraryActivity.class);
                     startActivity(goLibrary);
                     finish();
+                    break;
                 }
-                break;
         }
+
     }
+
 
     private String formatPublishedDate(String date)  {
 

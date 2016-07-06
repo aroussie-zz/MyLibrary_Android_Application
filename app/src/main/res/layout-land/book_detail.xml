@@ -27,7 +27,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp">
+            android:paddingBottom="@dimen/padding_layout">
 
 
             <LinearLayout
@@ -35,14 +35,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/linearLayoutGlobal"
-                android:padding="20dp">
+                android:padding="@dimen/padding_layout">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/relativeLayoutCover"
                     android:layout_weight="1.25"
-                    android:padding="20dp">
+                    android:padding="@dimen/padding_layout">
 
                     <ImageView
                         android:layout_width="match_parent"

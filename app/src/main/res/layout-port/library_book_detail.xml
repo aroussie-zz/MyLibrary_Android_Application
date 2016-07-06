@@ -27,9 +27,9 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp">
+            android:paddingLeft="@dimen/padding_layout"
+            android:paddingRight="@dimen/padding_layout"
+            android:paddingBottom="@dimen/padding_layout">
 
 
             <ImageView
@@ -257,7 +257,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkbox_read"
-                    android:layout_marginBottom="35dp"
+                    android:layout_marginBottom="@dimen/margin_checkboxes"
                     android:button="@drawable/checkbox_is_read_selector"/>
 
                 <CheckBox

@@ -39,11 +39,11 @@ public class AllBooksFragment extends Fragment {
 
     final String TAG = "AllBooksFragment";
     final CharSequence[] items = {"Update","Delete"};
+    final CharSequence[] answers = {"NO","YES"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.library_list_books_layout, container, false);
-
         recyclerView = (RecyclerView) view.findViewById(R.id.allBooks_list);
         adapter = new LibraryAdapter();
         emptyView = (TextView)view.findViewById(R.id.empty_view);
@@ -62,17 +62,27 @@ public class AllBooksFragment extends Fragment {
         dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch(which){
+                switch (which){
                     case 0:
                         Intent updateBook = new Intent(context,UpdateBook.class);
                         updateBook.putExtra("book",book);
                         startActivity(updateBook);
                         break;
                     case 1:
-                        database.deleteBook(book,userAccount.getId());
-                        adapter.notifyDataSetChanged();
-                        ((LibraryActivity)getActivity()).updatePager();
-                        updateUI();
+                        new AlertDialog.Builder(context)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setMessage("Are you sure you want to delete this book?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        database.deleteBook(book, userAccount.getId());
+                                        adapter.notifyDataSetChanged();
+                                        ((LibraryActivity) getActivity()).updatePager();
+                                        updateUI();
+                                    }
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
                         break;
                 }
             }

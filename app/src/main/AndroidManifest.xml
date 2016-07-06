@@ -19,7 +19,6 @@
 
         <activity android:name=".ui.LibraryActivity"
             android:theme="@style/ThemeOverlay.MyNoTitleActivity">
-
         </activity>
 
         <activity android:name=".ui.BookDetailActivity"
