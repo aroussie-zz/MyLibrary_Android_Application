@@ -170,32 +170,35 @@ public class LibraryDetailActivity extends BaseActivity implements CompoundButto
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch(buttonView.getId()){
-            case R.id.checkbox_read:
-                if (isChecked){
-                    book.setIsRead(true);
-                    database.updateIsReadColumn(book,getUserAccount().getId());
-                    Toast.makeText(getApplicationContext(),"The book is read", Toast.LENGTH_SHORT).show();
-                    break;
-                }else{
-                    book.setIsRead(false);
-                    database.updateIsReadColumn(book,getUserAccount().getId());
-                    Toast.makeText(getApplicationContext(),"The book is not read yet", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-            case R.id.checkbox_favorite:
-                if(isChecked){
-                    book.setIsFavorite(true);
-                    database.updateIsFavoriteColumn(book,getUserAccount().getId());
-                    Toast.makeText(getApplicationContext(),"Book added to your favorite", Toast.LENGTH_SHORT).show();
-                    break;
-                }else{
-                    book.setIsFavorite(false);
-                    database.updateIsFavoriteColumn(book,getUserAccount().getId());
-                    Toast.makeText(getApplicationContext(),"book removed from your favorite", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+        if(buttonView.isPressed()){
+            switch(buttonView.getId()){
+                case R.id.checkbox_read:
+                    if (isChecked){
+                        book.setIsRead(true);
+                        database.updateIsReadColumn(book,getUserAccount().getId());
+                        Toast.makeText(getApplicationContext(),"The book is read", Toast.LENGTH_SHORT).show();
+                        break;
+                    }else{
+                        book.setIsRead(false);
+                        database.updateIsReadColumn(book,getUserAccount().getId());
+                        Toast.makeText(getApplicationContext(),"The book is not read yet", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                case R.id.checkbox_favorite:
+                    if(isChecked){
+                        book.setIsFavorite(true);
+                        database.updateIsFavoriteColumn(book,getUserAccount().getId());
+                        Toast.makeText(getApplicationContext(),"Book added to your favorite", Toast.LENGTH_SHORT).show();
+                        break;
+                    }else{
+                        book.setIsFavorite(false);
+                        database.updateIsFavoriteColumn(book,getUserAccount().getId());
+                        Toast.makeText(getApplicationContext(),"book removed from your favorite", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+            }
         }
+
     }
 
     public void setCheckBoxes(){
