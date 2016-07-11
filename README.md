@@ -15,6 +15,9 @@ Use example of the app:
   - Now click again on the Book. You should see again the information about the book and there are also two icons next to the cover. If you click on the book, that means that you have read the book. If you click on the heart, the book will be added to your favorites.
   - You can also update the book. To do so, from you library view (home page), hold your finger on a book. A small window appears with "Update" and "Delete". Delete will remove the book from your library. Update makes you able to add your own rate to the book and also to write some comments about it (like your personal feelings)
   
+![stack Overflow](https://cloud.githubusercontent.com/assets/16949791/16746350/9a37a430-477f-11e6-9670-58cc7a63c762.png)
+
+  
 
 I design the application in a way to make it as user-friendly as possible. This is why there is not a lot of buttons or icons everywhere.
 There are 2 magnifying glasses, one on the top of the app to look for a new book using Google Book API and the other one, a little 
