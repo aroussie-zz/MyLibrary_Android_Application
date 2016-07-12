@@ -35,7 +35,6 @@ Libraries used:
   - SDK
   - Retrofit
   - Picasso
-  - RecyclerViews
   - Google services for Google Sign In
 
 
